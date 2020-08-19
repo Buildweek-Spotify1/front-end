@@ -1,12 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+//Redux Imports
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { SongReducer } from './redux/reducers';
+
+const store = createStore(SongReducer)
 
 function App() {
   return (
-    <div className="App">
-      Spotify Songs
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        Spotify Songs
+      </div>
+    </Provider>
   );
 }
 
