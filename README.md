@@ -1,12 +1,17 @@
 # front-end
 
 # Design
-  # Deployed Link
+  ##### Deployed Link
   todo
-  # Styling Library
+  ##### Styling Library
   todo
 # Endpoints
-/api/login, /api/signup, /api/song/:id
+##### Login
+/api/login
+##### Signup
+/api/signup
+##### Add, Delete, Get
+/api/song/:id
 
 # Site Structure 
 Login -> PlaylistPage -> SongDetails
