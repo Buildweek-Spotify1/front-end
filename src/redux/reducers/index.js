@@ -3,42 +3,42 @@ const init = {
     {
       title: 'A Favor House Atlantic',
       length: '',
-      artist: '',
+      artist: 'Coheed and Cambria',
       album: '',
       link: ''
     },
     {
       title: 'Blood Red Summer',
       length: '',
-      artist: '',
+      artist: 'Coheed and Cambria',
       album: '',
       link: ''
     },
     {
       title: 'In Keeping Secrets of Silent Earth: 3',
       length: '',
-      artist: '',
+      artist: 'Coheed and Cambria',
       album: '',
       link: ''
     },
     {
       title: 'Unheavenly Creatures',
       length: '',
-      artist: '',
+      artist: 'Coheed and Cambria',
       album: '',
       link: ''
     },
     {
       title: 'Junesong Provision',
       length: '',
-      artist: '',
+      artist: 'Coheed and Cambria',
       album: '',
       link: ''
     },
     {
       title: 'The Island',
       length: '',
-      artist: '',
+      artist: 'Coheed and Cambria',
       album: '',
       link: ''
     },
