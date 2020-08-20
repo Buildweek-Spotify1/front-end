@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, CardActionArea, Typography, Popover } from '@material-ui/core'
+import { Card, CardActionArea, Typography, Popover, useMediaQuery, useTheme } from '@material-ui/core'
 import useStyles from '../../utilities/Styles'
 
 const PlaylistItem = ({ song, ...rest }) => {
@@ -14,6 +14,7 @@ const PlaylistItem = ({ song, ...rest }) => {
   }
 
   const open = Boolean(popoverAnchor)
+  const matches = useMediaQuery(useTheme().breakpoints.down('md'))
   return (
     <div>
       <Card variant='outlined'>
@@ -31,8 +32,8 @@ const PlaylistItem = ({ song, ...rest }) => {
         open={open}
         anchorEl={popoverAnchor}
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
+          vertical: matches ? 'bottom' : 'top',
+          horizontal: matches ? 'left' : 'right'
         }}
         transformOrigin={{
           vertical: 'top',

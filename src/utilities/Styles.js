@@ -2,13 +2,13 @@ const { makeStyles } = require("@material-ui/core");
 
 const useStyles = makeStyles(theme => ({
   songTitle: {
-    fontSize: '1rem',
-    width: '200px',
+    fontSize: '1.5rem',
+    width: '400px',
     overflow: 'hidden',
     whiteSpace: 'nowrap'
   },
   songArtist: {
-    fontSize: '.5rem'
+    fontSize: '.75rem'
   },
   popover: {
     pointerEvents: 'none',
@@ -18,8 +18,19 @@ const useStyles = makeStyles(theme => ({
   },
   gridList: {
     width: '100%',
-    height: 450,
+    height: '80vh',
+
   },
+  playlist: {
+    [theme.breakpoints.down('md')]: {
+      display: 'none'
+    }
+  },
+  mobilePlaylist: {
+    [theme.breakpoints.up('lg')]: {
+      display: 'none'
+    }
+  }
 }))
 
 export default useStyles
