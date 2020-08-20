@@ -19,7 +19,9 @@ const useStyles = makeStyles(theme => ({
   gridList: {
     width: '100%',
     height: '80vh',
-
+    [theme.breakpoints.down('md')]: {
+      height: '100%'
+    }
   },
   playlist: {
     [theme.breakpoints.down('md')]: {
