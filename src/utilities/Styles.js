@@ -16,6 +16,10 @@ const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(1),
   },
+  gridList: {
+    width: '100%',
+    height: 450,
+  },
 }))
 
 export default useStyles
