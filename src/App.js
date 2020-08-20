@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import SignUp from "./components/SignUp"
 
 //Redux Imports
 import { createStore } from 'redux'
@@ -13,6 +14,7 @@ function App() {
     <Provider store={store}>
       <div className="App">
         Spotify Songs
+        <SignUp />
       </div>
     </Provider>
   );
