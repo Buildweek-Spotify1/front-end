@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import { Container, Typography, Button, TextField } from "@material-ui/core"
+import useStyles from "../../utilities/Styles";
+import { Container, Typography, Button, TextField } from "@material-ui/core";
+import { signUp } from "../../redux/actions";
+import * as yup from "yup";
 
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-}));
+
+
 
 
 
@@ -26,12 +23,51 @@ export default function SignUp() {
         password: "",
     });
 
+    const [errors, setErrors] = useState({
+        first: "",
+        last: "",
+        username: "",
+        password: "",
+    });
 
+    const validateChange = (e) => {
+
+                yup
+                  .reach(formSchema, e.target.name)
+                  .validate(e.target.name  ? e.target.value : null) 
+                  .then((valid) => {
+              
+                    setErrors({
+                      ...errors,
+                      [e.target.name]: ""
+                    });
+                  })
+                  .catch((err) => {
+                    console.log(err);
+              
+                    setErrors({
+                      ...errors,
+                      [e.target.name]: err.errors[0]
+                    });
+                  });
+              };
+
+    const formSchema = yup.object().shape({
+        first: yup.string().min(2, "Minimum 2 characters").required("Name is required"),
+            
+        last: yup.string().min(2, "Minimum 2 characters").required("Last name is required"),
+            
+        username: yup.string().min(4, "Must be at least 4 characters").required("Username is required"),
+            
+        password: yup.string().min(6, "Must be at least 6 characters").required("Password is required"),
+    });
+          
     const inputChange = (e) => {
         setFormState({
             ...formState,
             [e.target.name]: e.target.value,
         });
+        validateChange(e); 
     };
 
     const formSubmit = (e) => {
@@ -42,6 +78,7 @@ export default function SignUp() {
             username: "",
             password: "",
         });
+        signUp(formState)
     };
 
 
@@ -55,6 +92,7 @@ export default function SignUp() {
 
             <TextField id="outlined-basic" label="First Name" variant="outlined" value={formState.first}
                 onChange={inputChange} />
+                
             <TextField id="outlined-basic" label="Last Name" variant="outlined" value={formState.last}
                 onChange={inputChange} />
             <TextField id="outlined-basic" label="Username" variant="outlined" value={formState.username}
@@ -64,7 +102,7 @@ export default function SignUp() {
             <div className={classes.root}>
                 <Button variant="contained" color="primary" disableElevation>
                     Submit
-            </Button>
+                </Button>
             </div>
         </form>
         // </Container>

@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-
 import { Route } from 'react-router-dom'
 
 //Redux Imports
@@ -20,11 +19,13 @@ function App() {
     <Provider store={store}>
       <div className="App">
         Spotify Songs
-        <Route>
-          <SignUp path="/signup" />
+        <Route exact path="/">
+          <SignUp />
         </Route>
       </div>
-      <UserPage />
+      <Route path="/user" component={UserPage}>
+        <UserPage />
+      </Route>
     </Provider>
   );
 }
