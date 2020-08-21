@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 
+import { Route } from 'react-router-dom'
 
 //Redux Imports
 import { createStore, applyMiddleware } from 'redux'
@@ -19,7 +20,9 @@ function App() {
     <Provider store={store}>
       <div className="App">
         Spotify Songs
-        <SignUp />
+        <Route>
+          <SignUp path="/signup" />
+        </Route>
       </div>
       <UserPage />
     </Provider>
