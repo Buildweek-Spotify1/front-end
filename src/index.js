@@ -8,8 +8,8 @@ import UserPage from './components/songs/UserPage';
 
 ReactDOM.render(
   <Router>
-  <App />
-  </Router>
+    <App />
+  </Router>,
   document.getElementById('root')
 );
 
