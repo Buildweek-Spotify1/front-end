@@ -1,16 +1,19 @@
 import React from 'react';
 import './App.css';
-import SignUp from "./components/SignUp"
-import { Route } from 'react-router-dom';
 
+import { Route } from 'react-router-dom'
 
 //Redux Imports
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { SongReducer } from './redux/reducers';
-import UserPage from './components/songs/UserPage';
+import thunk from 'redux-thunk'
 
-const store = createStore(SongReducer)
+//component imports
+import UserPage from './components/songs/UserPage';
+import SignUp from "./components/signup/SignUp"
+
+const store = createStore(SongReducer, applyMiddleware(thunk))
 
 function App() {
   return (
@@ -18,7 +21,7 @@ function App() {
       <div className="App">
         Spotify Songs
         <Route>
-          <SignUp path="/signup"/>
+          <SignUp path="/signup" />
         </Route>
       </div>
       <UserPage />
