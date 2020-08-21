@@ -2,7 +2,7 @@
 
 # Design
   ##### Deployed Link
-  todo
+  [Live](https://spotify1-buildweek.vercel.app/) 
   ##### Styling Library
   todo
 # Endpoints
