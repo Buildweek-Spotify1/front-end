@@ -8,6 +8,7 @@ import { Route } from 'react-router-dom';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { SongReducer } from './redux/reducers';
+import UserPage from './components/songs/UserPage';
 
 const store = createStore(SongReducer)
 
@@ -20,7 +21,7 @@ function App() {
           <SignUp path="/signup"/>
         </Route>
       </div>
-      
+      <UserPage />
     </Provider>
   );
 }
