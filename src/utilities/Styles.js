@@ -1,6 +1,9 @@
 const { makeStyles } = require("@material-ui/core");
 
 const useStyles = makeStyles(theme => ({
+  root: {
+
+  },
   songTitle: {
     fontSize: '1.5rem',
     width: '400px',

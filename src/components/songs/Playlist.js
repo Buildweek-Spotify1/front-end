@@ -8,7 +8,7 @@ const Playlist = (props) => {
   console.log(songs)
   return (
     <div>
-      <div>{songs.map(song => <PlaylistItem song={song} />)}</div>
+      {songs.map(song => <PlaylistItem song={song} key={`${song.title} - ${song.artist}`} />)}
 
     </div>
   )

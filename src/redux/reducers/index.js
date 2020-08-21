@@ -1,3 +1,6 @@
+import { FETCH_LOG_IN, FETCH_LOG_IN_SUCCESS, FETCH_LOG_IN_ERROR, START_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE } from '../actions'
+
+
 export const init = {
   songs: [
     {
@@ -48,11 +51,50 @@ export const init = {
       link: '',
       albumCover: 'https://images-na.ssl-images-amazon.com/images/I/81RrOkr5cvL._SL1425_.jpg',
     },
-  ]
+  ],
+  token: localStorage.getItem('token'),
+  isFetching: false,
+  error: '',
 }
+
+
 
 export const SongReducer = (state = init, action) => {
   switch (action.type) {
+    case FETCH_LOG_IN:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case FETCH_LOG_IN_SUCCESS:
+      return {
+        ...state,
+        token: action.payload,
+        isFetching: false,
+      }
+    case FETCH_LOG_IN_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isFetching: false,
+      }
+    case START_SIGNUP:
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case SIGNUP_SUCCESS:
+      return {
+        ...state,
+        token: action.payload,
+        isFetching: false,
+      }
+    case SIGNUP_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload,
+      }
     default:
       return state;
   }

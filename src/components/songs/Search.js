@@ -17,7 +17,7 @@ const Search = (props) => {
       <form onSubmit={doSearch}><TextField label='search' /></form>
       <GridList cellHeight={matches ? 250 : 450} className={classes.gridList} cols={matches ? 2 : 4}>
         {songs.map(song => (
-          <GridListTile key={song.albumCover} cols={1}>
+          <GridListTile key={`${song.title}${song.albumCover}`} cols={1}>
             <img src={song.albumCover} />
             <GridListTileBar
               title={song.title}
