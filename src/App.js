@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import SignUp from "./components/SignUp"
+import { Route } from 'react-router-dom';
+
 
 //Redux Imports
 import { createStore } from 'redux'
@@ -14,8 +16,11 @@ function App() {
     <Provider store={store}>
       <div className="App">
         Spotify Songs
-        <SignUp />
+        <Route>
+          <SignUp path="/signup"/>
+        </Route>
       </div>
+      
     </Provider>
   );
 }
