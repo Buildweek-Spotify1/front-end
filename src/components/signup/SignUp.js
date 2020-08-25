@@ -31,15 +31,16 @@ export default function SignUp() {
     });
 
     const validateChange = (e) => {
+        e.persist();
 
                 yup
-                  .reach(formSchema, e.target.name)
-                  .validate(e.target.name  ? e.target.value : null) 
+                  .reach(formSchema, e.target.first)
+                  .validate(e.target.first ? e.target.value: "") 
                   .then((valid) => {
               
                     setErrors({
                       ...errors,
-                      [e.target.name]: ""
+                      [e.target.first]: ""
                     });
                   })
                   .catch((err) => {
@@ -47,13 +48,13 @@ export default function SignUp() {
               
                     setErrors({
                       ...errors,
-                      [e.target.name]: err.errors[0]
+                      [e.target.first]: err.errors[0]
                     });
                   });
               };
 
     const formSchema = yup.object().shape({
-        first: yup.string().min(2, "Minimum 2 characters").required("Name is required"),
+        first: yup.string().min(2, "Minimum 2 characters").required("First name is required"),
             
         last: yup.string().min(2, "Minimum 2 characters").required("Last name is required"),
             
@@ -63,9 +64,10 @@ export default function SignUp() {
     });
           
     const inputChange = (e) => {
+        e.persist();
         setFormState({
             ...formState,
-            [e.target.name]: e.target.value,
+            [e.target.first]: e.target.value,
         });
         validateChange(e); 
     };
@@ -89,14 +91,22 @@ export default function SignUp() {
 
 
         <form className={classes.root} noValidate autoComplete="off" onSubmit={formSubmit} name="form">
-
-            <TextField id="outlined-basic" label="First Name" variant="outlined" value={formState.first}
-                onChange={inputChange} />
-                
+                name Name:
+                <TextField
+                error={errors.first}
+                label="First Name"
+                defaultValue="First Name"
+                helperText="you suck"
+                />
+            {/* <TextField id="outlined-basic" label="First Name" variant="outlined" value={formState.first}
+                onChange={inputChange} /> */}
+                Last Name:
             <TextField id="outlined-basic" label="Last Name" variant="outlined" value={formState.last}
                 onChange={inputChange} />
+                Username:
             <TextField id="outlined-basic" label="Username" variant="outlined" value={formState.username}
                 onChange={inputChange} />
+                Password:
             <TextField id="outlined-basic" label="Password" variant="outlined" value={formState.password}
                 onChange={inputChange} />
             <div className={classes.root}>

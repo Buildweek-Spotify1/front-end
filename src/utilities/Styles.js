@@ -5,7 +5,10 @@ const useStyles = makeStyles(theme => ({
     '& > *': {
         margin: theme.spacing(1),
     },
-  },
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: 200,
+  }},
   songTitle: {
     fontSize: '1.5rem',
     width: '400px',
