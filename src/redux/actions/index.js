@@ -1,5 +1,4 @@
 import Axios from "axios"
-import { push } from 'react-router-redux'
 
 //Log in Actions
 export const FETCH_LOG_IN = 'FETCH_LOG_IN'

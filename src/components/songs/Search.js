@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { GridList, GridListTile, GridListTileBar, TextField, useMediaQuery, useTheme } from '@material-ui/core'
 import useStyles from '../../utilities/Styles'
-import { useSelector } from 'react-redux'
 import { init } from '../../redux/reducers'
 
 const Search = (props) => {
@@ -18,7 +17,7 @@ const Search = (props) => {
       <GridList cellHeight={matches ? 250 : 450} className={classes.gridList} cols={matches ? 2 : 4}>
         {songs.map(song => (
           <GridListTile key={`${song.title}${song.albumCover}`} cols={1}>
-            <img src={song.albumCover} />
+            <img src={song.albumCover} alt={song.title} />
             <GridListTileBar
               title={song.title}
               subtitle={song.artist}

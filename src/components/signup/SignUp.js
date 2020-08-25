@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../redux/actions";
 import useStyles from "../../utilities/Styles";
 import * as yup from "yup";
-import { useHistory } from "react-router";
+import { useHistory, Redirect } from "react-router";
 
 export default function SignUp() {
     const dispatch = useDispatch()
@@ -80,6 +80,10 @@ export default function SignUp() {
             password: "",
         });
     };
+
+    if (localStorage.getItem('token')) {
+        return <Redirect to='/user' />
+    }
 
 
     return (

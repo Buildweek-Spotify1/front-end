@@ -16,6 +16,8 @@ import PrivateRoute from './utilities/PrivateRoute'
 const store = createStore(SongReducer, applyMiddleware(thunk))
 
 function App() {
+
+
   return (
     <Provider store={store}>
       <div className="App">
