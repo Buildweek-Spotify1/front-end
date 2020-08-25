@@ -11,6 +11,7 @@ import thunk from 'redux-thunk'
 //component imports
 import UserPage from './components/songs/UserPage';
 import SignUp from "./components/signup/SignUp"
+import PrivateRoute from './utilities/PrivateRoute'
 
 const store = createStore(SongReducer, applyMiddleware(thunk))
 
@@ -22,10 +23,8 @@ function App() {
         <Route exact path="/">
           <SignUp />
         </Route>
+        <PrivateRoute path='/user' component={UserPage} />
       </div>
-      <Route path="/user" component={UserPage}>
-        <UserPage />
-      </Route>
     </Provider>
   );
 }
