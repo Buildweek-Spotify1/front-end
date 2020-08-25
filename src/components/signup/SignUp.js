@@ -1,17 +1,13 @@
 import React, { useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import { Container, Typography, Button, TextField } from "@material-ui/core"
+import { Button, TextField } from "@material-ui/core"
 import { useDispatch } from "react-redux";
 import { signUp } from "../../redux/actions";
+import useStyles from "../../utilities/Styles";
+import * as yup from "yup";
 
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-}));
+
+
 
 
 
@@ -29,12 +25,53 @@ export default function SignUp() {
         password: "",
     });
 
+    const [errors, setErrors] = useState({
+        firstName: "",
+        lastName: "",
+        username: "",
+        password: "",
+    });
+
+    const validateChange = (e) => {
+        e.persist();
+
+        yup
+            .reach(formSchema, e.target.name)
+            .validate(e.target.value)
+            .then((valid) => {
+
+                setErrors({
+                    ...errors,
+                    [e.target.name]: ""
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+
+                setErrors({
+                    ...errors,
+                    [e.target.name]: err.errors[0]
+                });
+            });
+    };
+
+    const formSchema = yup.object().shape({
+        firstName: yup.string().min(2, "Minimum 2 characters").required("First name is required"),
+
+        lastName: yup.string().min(2, "Minimum 2 characters").required("Last name is required"),
+
+        username: yup.string().min(4, "Must be at least 4 characters").required("Username is required"),
+
+        password: yup.string().min(6, "Must be at least 6 characters").required("Password is required"),
+    });
 
     const inputChange = (e) => {
+        e.persist();
         setFormState({
             ...formState,
             [e.target.name]: e.target.value,
         });
+        validateChange(e);
     };
 
     const formSubmit = (e) => {
@@ -46,6 +83,7 @@ export default function SignUp() {
             username: "",
             password: "",
         });
+        signUp(formState)
     };
 
 
@@ -56,19 +94,50 @@ export default function SignUp() {
 
 
         <form className={classes.root} noValidate autoComplete="off" onSubmit={formSubmit} name="form">
-
-            <TextField id="outlined-basic" name='firstName' label="First Name" variant="outlined" value={formState.firstName}
-                onChange={inputChange} />
-            <TextField id="outlined-basic" name='lastName' label="Last Name" variant="outlined" value={formState.lastName}
-                onChange={inputChange} />
-            <TextField id="outlined-basic" name='username' label="Username" variant="outlined" value={formState.username}
-                onChange={inputChange} />
-            <TextField id="outlined-basic" name='password' label="Password" variant="outlined" value={formState.password}
-                onChange={inputChange} />
+            <TextField
+                id="outlined-basic"
+                error={errors.firstName}
+                label="First Name"
+                helperText={errors.firstName}
+                variant="outlined"
+                value={formState.firstName}
+                onChange={inputChange}
+                name={'firstName'}
+            />
+            <TextField
+                id="outlined-basic"
+                error={errors.firstName}
+                label="Last Name"
+                helperText={errors.lastName}
+                variant="outlined"
+                value={formState.lastName}
+                onChange={inputChange}
+                name={'lastName'}
+            />
+            <TextField
+                id="outlined-basic"
+                error={errors.username}
+                label="Username"
+                helperText={errors.username}
+                variant="outlined"
+                value={formState.username}
+                onChange={inputChange}
+                name={'username'}
+            />
+            <TextField
+                id="outlined-basic"
+                error={errors.password}
+                label="Password"
+                helperText={errors.password}
+                variant="outlined"
+                value={formState.password}
+                onChange={inputChange}
+                name={'password'}
+            />
             <div className={classes.root}>
                 <Button variant="contained" color="primary" disableElevation onClick={formSubmit}>
                     Submit
-            </Button>
+                </Button>
             </div>
         </form>
         // </Container>
