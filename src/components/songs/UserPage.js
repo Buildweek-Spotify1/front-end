@@ -3,9 +3,11 @@ import { TextField, Card, CardContent, CardActionArea, Typography, Grid, Accordi
 import Playlist from './Playlist'
 import Search from './Search'
 import useStyles from '../../utilities/Styles'
+import { useSelector } from 'react-redux'
 
 const UserPage = props => {
   const classes = useStyles()
+  const user = useSelector(state => state.user)
   return (
     <div>
       <Grid container spacing={1} justify='space-around'>

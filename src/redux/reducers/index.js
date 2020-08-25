@@ -69,7 +69,8 @@ export const SongReducer = (state = init, action) => {
     case FETCH_LOG_IN:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        error: ''
       }
     case FETCH_LOG_IN_SUCCESS:
       return {
@@ -87,13 +88,17 @@ export const SongReducer = (state = init, action) => {
       return {
         ...state,
         isFetching: true,
+        error: ''
       }
-    case SIGNUP_SUCCESS:
+    case SIGNUP_SUCCESS: {
+      debugger
       return {
         ...state,
-        token: action.payload,
+        token: action.payload.token,
+        user: action.payload.createdUser,
         isFetching: false,
       }
+    }
     case SIGNUP_FAILURE:
       return {
         ...state,

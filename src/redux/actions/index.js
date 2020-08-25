@@ -1,4 +1,5 @@
 import Axios from "axios"
+import { push } from 'react-router-redux'
 
 //Log in Actions
 export const FETCH_LOG_IN = 'FETCH_LOG_IN'
@@ -20,28 +21,29 @@ export const START_SEARCH = 'START_SEARCH'
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS'
 export const SEARCH_FAILURE = 'SEARCH_FAILURE'
 
-export const logIn = (credentials) => dispatch => {
+export const logIn = (credentials, done) => dispatch => {
   dispatch({ type: FETCH_LOG_IN })
   Axios.post(`https://spotify1-pt-bw.herokuapp.com/api/auth/signup`, credentials)
     .then(res => {
-      debugger
       dispatch({ type: FETCH_LOG_IN_SUCCESS, payload: res.data })
+        .then(done())
     })
     .catch(err => {
-      dispatch({ type: FETCH_LOG_IN_ERROR, payload: err.message })
+      dispatch({ type: FETCH_LOG_IN_ERROR, payload: err.response.data.message })
     })
 }
 
-export const signUp = userInfo => dispatch => {
-  debugger
+export const signUp = (userInfo, done) => dispatch => {
   dispatch({ type: START_SIGNUP })
   Axios.post(`https://spotify1-pt-bw.herokuapp.com/api/auth/signup`, userInfo)
     .then(res => {
-      debugger
-
+      localStorage.setItem('token', res.data.token)
       dispatch({ type: SIGNUP_SUCCESS, payload: res.data })
+        .then(done())
     })
     .catch(err => {
-      dispatch({ type: SIGNUP_FAILURE, payload: err.message })
+      debugger
+      console.log(err)
+      dispatch({ type: SIGNUP_FAILURE, payload: err.response.data.message })
     })
 }
