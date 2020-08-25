@@ -2,6 +2,11 @@ import { FETCH_LOG_IN, FETCH_LOG_IN_SUCCESS, FETCH_LOG_IN_ERROR, START_SIGNUP, S
 
 
 export const init = {
+  user: {
+    firstName: '',
+    lastName: '',
+    id: -1
+  },
   songs: [
     {
       title: 'A Favor House Atlantic',
