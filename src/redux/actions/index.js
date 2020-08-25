@@ -24,11 +24,11 @@ export const logIn = (credentials) => dispatch => {
   dispatch({ type: FETCH_LOG_IN })
   Axios.post(`https://spotify1-pt-bw.herokuapp.com/api/auth/signup`, credentials)
     .then(res => {
-      //dispatch({ type: FETCH_LOG_IN_SUCCESS, payload: res.data })
-      console.log(res)
+      debugger
+      dispatch({ type: FETCH_LOG_IN_SUCCESS, payload: res.data })
     })
     .catch(err => {
-      //dispatch({ type: FETCH_LOG_IN_ERROR, payload: err.message })
+      dispatch({ type: FETCH_LOG_IN_ERROR, payload: err.message })
     })
 }
 
@@ -37,13 +37,9 @@ export const signUp = userInfo => dispatch => {
   dispatch({ type: START_SIGNUP })
   Axios.post(`https://spotify1-pt-bw.herokuapp.com/api/auth/signup`, userInfo)
     .then(res => {
-      debugger
-      console.log(res)
-      //dispatch({ type: SIGNUP_SUCCESS, payload: res.data })
-
+      dispatch({ type: SIGNUP_SUCCESS, payload: res.data })
     })
     .catch(err => {
-      debugger
       dispatch({ type: SIGNUP_FAILURE, payload: err.message })
     })
 }
