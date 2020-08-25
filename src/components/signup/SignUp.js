@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core"
-import { useDispatch } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../redux/actions";
 import useStyles from "../../utilities/Styles";
 import * as yup from "yup";
-
-
-
-
-
-
-
+import { useHistory } from "react-router";
 
 export default function SignUp() {
     const dispatch = useDispatch()
-
     const classes = useStyles();
+    const history = useHistory()
+    const submitError = useSelector(state => state.error)
 
 
     const [formState, setFormState] = useState({
@@ -76,14 +72,13 @@ export default function SignUp() {
 
     const formSubmit = (e) => {
         e.preventDefault();
-        dispatch(signUp(formState))
+        dispatch(signUp(formState, () => history.push('/user')))
         setFormState({
             firstName: "",
             lastName: "",
             username: "",
             password: "",
         });
-        signUp(formState)
     };
 
 
@@ -139,6 +134,7 @@ export default function SignUp() {
                     Submit
                 </Button>
             </div>
+            {submitError && <div>{submitError}</div>}
         </form>
         // </Container>
 
