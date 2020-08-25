@@ -25,6 +25,7 @@ export const logIn = (credentials, done) => dispatch => {
   dispatch({ type: FETCH_LOG_IN })
   Axios.post(`https://spotify1-pt-bw.herokuapp.com/api/auth/signup`, credentials)
     .then(res => {
+      debugger
       dispatch({ type: FETCH_LOG_IN_SUCCESS, payload: res.data })
         .then(done())
     })
