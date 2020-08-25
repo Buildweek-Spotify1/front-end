@@ -24,7 +24,6 @@ export const logIn = (credentials, done) => dispatch => {
   dispatch({ type: FETCH_LOG_IN })
   Axios.post(`https://spotify1-pt-bw.herokuapp.com/api/auth/signup`, credentials)
     .then(res => {
-      debugger
       dispatch({ type: FETCH_LOG_IN_SUCCESS, payload: res.data })
         .then(done())
     })
@@ -42,8 +41,6 @@ export const signUp = (userInfo, done) => dispatch => {
         .then(done())
     })
     .catch(err => {
-      debugger
-      console.log(err)
       dispatch({ type: SIGNUP_FAILURE, payload: err.response.data.message })
     })
 }

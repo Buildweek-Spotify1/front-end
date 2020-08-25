@@ -91,7 +91,6 @@ export const SongReducer = (state = init, action) => {
         error: ''
       }
     case SIGNUP_SUCCESS: {
-      debugger
       return {
         ...state,
         token: action.payload.token,
