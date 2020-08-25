@@ -17,30 +17,29 @@ export default function SignUp() {
 
 
     const [formState, setFormState] = useState({
-        first: "",
-        last: "",
+        firstName: "",
+        lastName: "",
         username: "",
         password: "",
     });
 
     const [errors, setErrors] = useState({
-        first: "",
-        last: "",
+        firstName: "",
+        lastName: "",
         username: "",
         password: "",
     });
 
     const validateChange = (e) => {
-        e.persist();
 
                 yup
-                  .reach(formSchema, e.target.first)
-                  .validate(e.target.first ? e.target.value: "") 
+                  .reach(formSchema, e.target.name)
+                  .validate(e.target.value) 
                   .then((valid) => {
               
                     setErrors({
                       ...errors,
-                      [e.target.first]: ""
+                      [e.target.name]: ""
                     });
                   })
                   .catch((err) => {
@@ -48,15 +47,15 @@ export default function SignUp() {
               
                     setErrors({
                       ...errors,
-                      [e.target.first]: err.errors[0]
+                      [e.target.name]: err.errors[0]
                     });
                   });
-              };
+    };
 
     const formSchema = yup.object().shape({
-        first: yup.string().min(2, "Minimum 2 characters").required("First name is required"),
+        firstName: yup.string().min(2, "Minimum 2 characters").required("First name is required"),
             
-        last: yup.string().min(2, "Minimum 2 characters").required("Last name is required"),
+        lastName: yup.string().min(2, "Minimum 2 characters").required("Last name is required"),
             
         username: yup.string().min(4, "Must be at least 4 characters").required("Username is required"),
             
@@ -67,7 +66,7 @@ export default function SignUp() {
         e.persist();
         setFormState({
             ...formState,
-            [e.target.first]: e.target.value,
+            [e.target.name]: e.target.value,
         });
         validateChange(e); 
     };
@@ -75,8 +74,8 @@ export default function SignUp() {
     const formSubmit = (e) => {
         e.preventDefault();
         setFormState({
-            first: "",
-            last: "",
+            firstName: "",
+            lastName: "",
             username: "",
             password: "",
         });
@@ -91,24 +90,38 @@ export default function SignUp() {
 
 
         <form className={classes.root} noValidate autoComplete="off" onSubmit={formSubmit} name="form">
-                name Name:
                 <TextField
-                error={errors.first}
+                error={errors.firstName}
+                name="firstName"
                 label="First Name"
-                defaultValue="First Name"
-                helperText="you suck"
+                helperText={errors.firstName}
+                value={formState.firstName}
+                onChange={inputChange}
                 />
-            {/* <TextField id="outlined-basic" label="First Name" variant="outlined" value={formState.first}
-                onChange={inputChange} /> */}
-                Last Name:
-            <TextField id="outlined-basic" label="Last Name" variant="outlined" value={formState.last}
-                onChange={inputChange} />
-                Username:
-            <TextField id="outlined-basic" label="Username" variant="outlined" value={formState.username}
-                onChange={inputChange} />
-                Password:
-            <TextField id="outlined-basic" label="Password" variant="outlined" value={formState.password}
-                onChange={inputChange} />
+                <TextField
+                error={errors.lastName}
+                name="lastName"
+                label="Last Name"
+                helperText={errors.lastName}
+                value={formState.lastName}
+                onChange={inputChange}
+                />
+                <TextField
+                error={errors.username}
+                name="username"
+                label="Username"
+                helperText={errors.username}
+                value={formState.username}
+                onChange={inputChange}
+                />
+                <TextField
+                error={errors.password}
+                name="password"
+                label="Password"
+                helperText={errors.password}
+                value={formState.password}
+                onChange={inputChange}
+                />
             <div className={classes.root}>
                 <Button variant="contained" color="primary" disableElevation>
                     Submit
