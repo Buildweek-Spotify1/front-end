@@ -37,6 +37,8 @@ export const signUp = userInfo => dispatch => {
   dispatch({ type: START_SIGNUP })
   Axios.post(`https://spotify1-pt-bw.herokuapp.com/api/auth/signup`, userInfo)
     .then(res => {
+      debugger
+
       dispatch({ type: SIGNUP_SUCCESS, payload: res.data })
     })
     .catch(err => {
