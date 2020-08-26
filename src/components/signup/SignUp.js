@@ -86,7 +86,7 @@ export default function SignUp() {
                 onChange={inputChange}
                 name={'password'}
             />
-            <div className={classes.root}>
+            <div className={classes.submit}>
                 <Button variant="contained" color="primary" disableElevation onClick={formSubmit}>
                     Submit
                 </Button>
