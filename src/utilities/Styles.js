@@ -3,12 +3,26 @@ const { makeStyles } = require("@material-ui/core");
 const useStyles = makeStyles(theme => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
+      margin: theme.spacing(0),
     },
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
       width: 200,
     }
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  form: {
+    width: '100%',
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    textAlign: 'center',
   },
   songTitle: {
     fontSize: '1.5rem',

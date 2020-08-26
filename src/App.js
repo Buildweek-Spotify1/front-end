@@ -13,6 +13,7 @@ import UserPage from './components/songs/UserPage';
 import SignUp from './components/signup/SignUp'
 import PrivateRoute from './utilities/PrivateRoute'
 import Header from './components/header/Header'
+import SignIn from './components/signin/SignIn'
 
 console.log(process.env.CLIENT_ID)
 const store = createStore(SongReducer, applyMiddleware(thunk))
@@ -22,10 +23,14 @@ function App() {
   return (
     <Provider store={store}>
       <Header />
+        <Route path="/signin">
+          <SignIn />
+        </Route>
       <div className="App">
         <Route exact path="/">
           <SignUp />
         </Route>
+
         <PrivateRoute path='/user' component={UserPage} />
       </div>
     </Provider>

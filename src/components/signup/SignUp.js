@@ -43,8 +43,6 @@ export default function SignUp() {
 
     return (
 
-        // <Container maxWidth="sm">
-        //             <Typography component="div" style={{ backgroundColor: '#7FFF00', height: '100vh' }} />
 
 
         <form className={classes.root} noValidate autoComplete="off" onSubmit={formSubmit} name="form">
@@ -88,14 +86,13 @@ export default function SignUp() {
                 onChange={inputChange}
                 name={'password'}
             />
-            <div className={classes.root}>
+            <div className={classes.submit}>
                 <Button variant="contained" color="primary" disableElevation onClick={formSubmit}>
                     Submit
                 </Button>
             </div>
             {submitError && <div>{submitError}</div>}
         </form>
-        // </Container>
 
     );
 }
