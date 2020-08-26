@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography, Grid, Accordion, AccordionDetails, AccordionSummary } from '@material-ui/core'
-import Playlist from './Playlist'
-import Search from './Search'
+import Playlist from './Playlist/Playlist'
+import Search from './Search/Search'
 import useStyles from '../../utilities/Styles'
 
 const UserPage = props => {
