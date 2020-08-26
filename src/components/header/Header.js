@@ -20,8 +20,8 @@ const Header = () => {
             }}>Sign Out</Button>
             :
             <>
-              <Button onClick={() => history.push('/sign-up')}>Sign Up</Button>
-              <Button onClick={() => history.push('/')}>Log In</Button>
+              <Button onClick={() => history.push('/')}>Sign Up</Button>
+              <Button onClick={() => history.push('/signin')}>Log In</Button>
             </>}
         </Toolbar>
       </Container>
