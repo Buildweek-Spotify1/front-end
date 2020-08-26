@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Card, CardActionArea, Typography, Popover, useMediaQuery, useTheme } from '@material-ui/core'
 import useStyles from '../../utilities/Styles'
 
-const PlaylistItem = ({ song, ...rest }) => {
+const PlaylistItem = ({ song, setSelectedSong, setModalOpen, ...rest }) => {
   const classes = useStyles()
 
   const [popoverAnchor, setPopoverAnchor] = useState(null)
@@ -18,7 +18,10 @@ const PlaylistItem = ({ song, ...rest }) => {
   return (
     <div>
       <Card variant='outlined'>
-        <CardActionArea onMouseEnter={handlePopoverOpen} onMouseLeave={handlePopoverClose}>
+        <CardActionArea onClick={() => {
+          setSelectedSong(song)
+          setModalOpen(true)
+        }} onMouseEnter={handlePopoverOpen} onMouseLeave={handlePopoverClose}>
           <Typography className={classes.songTitle} variant='button' display='block'>{song.title}</Typography>
           <Typography className={classes.songArtist} variant='overline'>{song.artist}</Typography>
         </CardActionArea>

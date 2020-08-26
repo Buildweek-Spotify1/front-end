@@ -14,9 +14,11 @@ import SignUp from './components/signup/SignUp'
 import PrivateRoute from './utilities/PrivateRoute'
 import Header from './components/header/Header'
 
+console.log(process.env.CLIENT_ID)
 const store = createStore(SongReducer, applyMiddleware(thunk))
 
 function App() {
+
   return (
     <Provider store={store}>
       <Header />
