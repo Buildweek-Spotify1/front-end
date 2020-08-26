@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, /*useEffect*/ } from 'react'
 import { GridList, GridListTile, GridListTileBar, TextField, useMediaQuery, useTheme } from '@material-ui/core'
 import useStyles from '../../../utilities/Styles'
 import { init } from '../../../redux/reducers'
-import Axios from 'axios'
-import qs from 'qs'
-import { useDispatch } from 'react-redux'
-import { addToPlaylist } from '../../../redux/actions'
+// import Axios from 'axios'
+// import qs from 'qs'
 import SongModal from './SongModal'
 
 
@@ -14,32 +12,31 @@ const Search = (props) => {
   const [songs, setSongs] = useState([])
   const [search, setSearch] = useState('')
   const matches = useMediaQuery(useTheme().breakpoints.down('md'))
-  const dispatch = useDispatch()
 
   // useEffect(() => {
-  //   Axios.post('https://accounts.spotify.com/api/token',
-  //     qs.stringify({
-  //       grant_type: 'client_credentials'
-  //     }),
-  //     {
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/x-www-form-urlencoded',
-  //       },
-  //       auth: {
-  //         username: process.env.CLIENT_ID,
-  //         password: process.env.CLIENT_SECRET
-  //       }
+  // Axios.post('https://accounts.spotify.com/api/token',
+  //   qs.stringify({
+  //     grant_type: 'client_credentials'
+  //   }),
+  //   {
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/x-www-form-urlencoded',
+  //     },
+  //     auth: {
+  //       username: process.env.CLIENT_ID,
+  //       password: process.env.CLIENT_SECRET
   //     }
-  //   )
-  //     .then(res => {
-  //       localStorage.setItem('spotifyToken', res.data.access_token)
-  //       console.log(res)
-  //     })
-  //     .catch(err => {
-  //       debugger
-  //       console.log(err)
-  //     })
+  //   }
+  // )
+  //   .then(res => {
+  //     localStorage.setItem('spotifyToken', res.data.access_token)
+  //     console.log(res)
+  //   })
+  //   .catch(err => {
+  //     debugger
+  //     console.log(err)
+  //   })
   // }, [])
 
   const doSearch = e => {
@@ -77,10 +74,6 @@ const Search = (props) => {
 
 
     setSongs(init.songs)
-
-  }
-
-  const getRecommendedSongs = song => {
 
   }
 

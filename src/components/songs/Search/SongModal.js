@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Modal, Card, CardMedia, CardContent, Typography, CardActionArea, Button, CardActions } from '@material-ui/core'
+import React from 'react'
+import { Modal, Card, CardMedia, CardContent, Typography, Button, CardActions } from '@material-ui/core'
 import useStyles from '../../../utilities/Styles'
 import { useDispatch } from 'react-redux'
 import { addToPlaylist, getRecommendedSongs } from '../../../redux/actions'

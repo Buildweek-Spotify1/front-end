@@ -1,4 +1,5 @@
 import Axios from "axios"
+import { authAxios } from '../../utilities/authAxios'
 
 //Log in Actions
 export const FETCH_LOG_IN = 'FETCH_LOG_IN'
@@ -26,9 +27,11 @@ export const REMOVE_SONG_FROM_PLAYLIST = 'REMOVE_SONG_FROM_PLAYLIST'
 
 export const logIn = (credentials, done) => dispatch => {
   dispatch({ type: FETCH_LOG_IN })
-  Axios.post(`https://spotify1-pt-bw.herokuapp.com/api/auth/signup`, credentials)
+
+  authAxios().post(`/auth/login`, credentials)
     .then(res => {
       dispatch({ type: FETCH_LOG_IN_SUCCESS, payload: res.data })
+      localStorage.setItem('token', res.data.token)
       done()
     })
     .catch(err => {

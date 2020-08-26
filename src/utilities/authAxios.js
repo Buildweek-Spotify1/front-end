@@ -1,10 +1,10 @@
-const { default: Axios } = require("axios");
+import axios from 'axios'
 
 export const authAxios = () => {
   const token = localStorage.getItem('token')
 
-  return Axios.create({
-    baseURL: 'https://spotify1-pt-bw.herokuapp.com/api/auth/signup',
+  return axios.create({
+    baseURL: 'https://spotify1-pt-bw.herokuapp.com/api',
     headers: {
       authorization: token
     }
