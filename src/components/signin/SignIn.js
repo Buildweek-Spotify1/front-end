@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useStyles from '../../utilities/Styles';
 import { Container, Typography, TextField, Button } from '@material-ui/core'
-import { useFormValidation } from "../../hooks/useForm";
+import { useForm } from "../../hooks/useForm";
 import { logIn } from '../../redux/actions';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Redirect } from "react-router";
@@ -28,7 +28,7 @@ export default function SignIn () {
   });
 
 
-  const [formState, errors, inputChange, formSubmit] = useFormValidation(init, formSchema, () => {
+  const [formState, inputChange, formSubmit] = useForm(init, formSchema, () => {
     dispatch(logIn(formState, () => history.push('/user')))
 });
     
@@ -42,9 +42,7 @@ export default function SignIn () {
         <form className={classes.form} noValidate onSubmit={formSubmit} name="form">
           <TextField
             id="email"
-            error={errors.email}
             label="Email Address"
-            helperText={errors.email}
             variant="outlined"
             margin="normal"
             required
@@ -54,9 +52,7 @@ export default function SignIn () {
           />
           <TextField
             id="password"
-            error={errors.password}
             label="Password"
-            helperText={errors.password}
             variant="outlined"
             margin="normal"
             required
