@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../redux/actions";
 import useStyles from "../../utilities/Styles";
 import * as yup from "yup";
-import { useHistory } from "react-router";
+import { useHistory, Redirect } from "react-router";
+import { useFormValidation } from "../../hooks/useForm";
 
 export default function SignUp() {
     const dispatch = useDispatch()
@@ -13,43 +14,12 @@ export default function SignUp() {
     const history = useHistory()
     const submitError = useSelector(state => state.error)
 
-
-    const [formState, setFormState] = useState({
-        firstName: "",
-        lastName: "",
-        username: "",
-        password: "",
-    });
-
-    const [errors, setErrors] = useState({
-        firstName: "",
-        lastName: "",
-        username: "",
-        password: "",
-    });
-
-    const validateChange = (e) => {
-        e.persist();
-
-        yup
-            .reach(formSchema, e.target.name)
-            .validate(e.target.value)
-            .then((valid) => {
-
-                setErrors({
-                    ...errors,
-                    [e.target.name]: ""
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-
-                setErrors({
-                    ...errors,
-                    [e.target.name]: err.errors[0]
-                });
-            });
-    };
+    const init = {
+        firstName: '',
+        lastName: '',
+        username: '',
+        password: ''
+    }
 
     const formSchema = yup.object().shape({
         firstName: yup.string().min(2, "Minimum 2 characters").required("First name is required"),
@@ -61,25 +31,14 @@ export default function SignUp() {
         password: yup.string().min(6, "Must be at least 6 characters").required("Password is required"),
     });
 
-    const inputChange = (e) => {
-        e.persist();
-        setFormState({
-            ...formState,
-            [e.target.name]: e.target.value,
-        });
-        validateChange(e);
-    };
-
-    const formSubmit = (e) => {
-        e.preventDefault();
+    const [formState, errors, inputChange, formSubmit] = useFormValidation(init, formSchema, () => {
         dispatch(signUp(formState, () => history.push('/user')))
-        setFormState({
-            firstName: "",
-            lastName: "",
-            username: "",
-            password: "",
-        });
-    };
+    })
+
+
+    if (localStorage.getItem('token')) {
+        return <Redirect to='/user' />
+    }
 
 
     return (
