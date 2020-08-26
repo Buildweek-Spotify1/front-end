@@ -6,6 +6,7 @@ import Axios from 'axios'
 import qs from 'qs'
 import { useDispatch } from 'react-redux'
 import { addToPlaylist } from '../../redux/actions'
+import SongModal from './SongModal'
 
 
 const Search = (props) => {
@@ -61,6 +62,7 @@ const Search = (props) => {
     //         title: track.name,
     //         artist: track.artists[0].name,
     //         albumCover: track.album.images[0].url,
+    //         album: track.album.name
     //         id: track.id
     //       })
     //     })
@@ -72,11 +74,27 @@ const Search = (props) => {
     //     debugger
     //     console.log(err)
     //   })
+
+
     setSongs(init.songs)
 
   }
+
+  const getRecommendedSongs = song => {
+
+  }
+
   const handleChange = e => {
     setSearch(e.target.value)
+  }
+
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedSong, setSelectedSong] = useState({ title: '' })
+
+  const addSongToPlaylist = (song) => {
+    // dispatch(addToPlaylist(song))
+    setSelectedSong(song)
+    setModalOpen(true)
   }
 
   return (
@@ -84,9 +102,7 @@ const Search = (props) => {
       <form onSubmit={doSearch}><TextField label='search' value={search} onChange={handleChange} /></form>
       <GridList cellHeight={matches ? 250 : 450} className={classes.gridList} cols={matches ? 2 : 4}>
         {songs.map(song => (
-          <GridListTile onClick={e => {
-            dispatch(addToPlaylist(song))
-          }} key={`${song.title}${song.albumCover}`} cols={1}>
+          <GridListTile onClick={e => addSongToPlaylist(song)} key={`${song.title}${song.albumCover}`} cols={1}>
             <img src={song.albumCover} alt={song.title} />
             <GridListTileBar
               title={song.title}
@@ -95,6 +111,7 @@ const Search = (props) => {
           </GridListTile>
         ))}
       </GridList>
+      <SongModal song={selectedSong} open={modalOpen} setOpen={setModalOpen} />
     </div >
 
   )

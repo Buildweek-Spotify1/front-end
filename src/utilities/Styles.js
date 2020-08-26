@@ -3,12 +3,13 @@ const { makeStyles } = require("@material-ui/core");
 const useStyles = makeStyles(theme => ({
   root: {
     '& > *': {
-        margin: theme.spacing(1),
+      margin: theme.spacing(1),
     },
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
       width: 200,
-  }},
+    }
+  },
   songTitle: {
     fontSize: '1.5rem',
     width: '400px',
@@ -40,7 +41,22 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('lg')]: {
       display: 'none'
     }
-  }
+  },
+  modal: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+  songMedia: {
+    height: '100%',
+    paddingTop: '100%'
+  },
 }))
 
 export default useStyles

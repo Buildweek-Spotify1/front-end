@@ -22,6 +22,7 @@ export const SEARCH_FAILURE = 'SEARCH_FAILURE'
 
 //Playlist Actions
 export const ADD_SONG_TO_PLAYLIST = 'ADD_SONG_TO_PLAYLIST'
+export const REMOVE_SONG_FROM_PLAYLIST = 'REMOVE_SONG_FROM_PLAYLIST'
 
 export const logIn = (credentials, done) => dispatch => {
   dispatch({ type: FETCH_LOG_IN })
@@ -53,4 +54,12 @@ export const signUp = (userInfo, done) => dispatch => {
 
 export const addToPlaylist = song => {
   return { type: ADD_SONG_TO_PLAYLIST, payload: song }
+}
+
+export const removeFromPlaylist = song => {
+  return { type: REMOVE_SONG_FROM_PLAYLIST, payload: song.id }
+}
+
+export const getRecommendedSongs = song => dispatch => {
+
 }
