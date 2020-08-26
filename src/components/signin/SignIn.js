@@ -4,7 +4,7 @@ import { Container, Typography, TextField, Button } from '@material-ui/core'
 import { useForm } from "../../hooks/useForm";
 import { logIn } from '../../redux/actions';
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory, Redirect } from "react-router";
 
 
 
@@ -24,6 +24,10 @@ export default function SignIn() {
   const [formState, inputChange, formSubmit] = useForm(init, () => {
     dispatch(logIn(formState, () => history.push('/user')))
   });
+
+  if (localStorage.getItem('token')) {
+    return <Redirect to='/user' />
+  }
 
 
   return (
