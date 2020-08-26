@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextField } from "@material-ui/core"
+import { Button, TextField, Typography, Container } from "@material-ui/core"
 
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../redux/actions";
@@ -44,56 +44,66 @@ export default function SignUp() {
     return (
 
 
+        <Container component="main" maxWidth="xs">
+            <div className={classes.paper}>
+                <Typography component="h1" variant="h5">
+                    Sign in
+        </Typography>
+                <form className={classes.form} noValidate autoComplete="off" onSubmit={formSubmit} name="form">
 
-        <form className={classes.root} noValidate autoComplete="off" onSubmit={formSubmit} name="form">
-            <TextField
-                id="outlined-basic"
-                error={errors.firstName}
-                label="First Name"
-                helperText={errors.firstName}
-                variant="outlined"
-                value={formState.firstName}
-                onChange={inputChange}
-                name={'firstName'}
-            />
-            <TextField
-                id="outlined-basic"
-                error={errors.firstName}
-                label="Last Name"
-                helperText={errors.lastName}
-                variant="outlined"
-                value={formState.lastName}
-                onChange={inputChange}
-                name={'lastName'}
-            />
-            <TextField
-                id="outlined-basic"
-                error={errors.username}
-                label="Username"
-                helperText={errors.username}
-                variant="outlined"
-                value={formState.username}
-                onChange={inputChange}
-                name={'username'}
-            />
-            <TextField
-                id="outlined-basic"
-                error={errors.password}
-                label="Password"
-                helperText={errors.password}
-                variant="outlined"
-                value={formState.password}
-                onChange={inputChange}
-                name={'password'}
-            />
-            <div className={classes.submit}>
-                <Button variant="contained" color="primary" disableElevation onClick={formSubmit}>
-                    Submit
+                    <TextField
+                        id="outlined-basic"
+                        error={errors.firstName}
+                        label="First Name"
+                        helperText={errors.firstName}
+                        variant="outlined"
+                        value={formState.firstName}
+                        onChange={inputChange}
+                        name={'firstName'}
+                        fullWidth
+                    />
+                    <TextField
+                        id="outlined-basic"
+                        error={errors.firstName}
+                        label="Last Name"
+                        helperText={errors.lastName}
+                        variant="outlined"
+                        value={formState.lastName}
+                        onChange={inputChange}
+                        name={'lastName'}
+                        fullWidth
+                    />
+                    <TextField
+                        id="outlined-basic"
+                        error={errors.username}
+                        label="Username"
+                        helperText={errors.username}
+                        variant="outlined"
+                        value={formState.username}
+                        onChange={inputChange}
+                        name={'username'}
+                        fullWidth
+                    />
+                    <TextField
+                        id="outlined-basic"
+                        error={errors.password}
+                        label="Password"
+                        helperText={errors.password}
+                        variant="outlined"
+                        value={formState.password}
+                        onChange={inputChange}
+                        name={'password'}
+                        fullWidth
+                    />
+                    <div className={classes.submit}>
+                        <Button variant="contained" color="primary" disableElevation onClick={formSubmit}>
+                            Submit
                 </Button>
+                    </div>
+                    {submitError && <div>{submitError}</div>}
+                </form>
             </div>
-            {submitError && <div>{submitError}</div>}
-        </form>
-
+        </Container>
     );
 }
 

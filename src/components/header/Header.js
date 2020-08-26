@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { AppBar, Container, Toolbar, Typography, Button } from '@material-ui/core'
-import { useHistory } from 'react-router'
+import { useLocation, useHistory } from 'react-router'
 
-const Header = () => {
+const Header = (props) => {
   const history = useHistory()
+  const location = useLocation()
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token') !== null)
+
+  useEffect(() => {
+    setLoggedIn(localStorage.getItem('token') !== null)
+  }, [location])
+
   return (
     <AppBar position="static" color="primary">
       <Container maxWidth="md">
