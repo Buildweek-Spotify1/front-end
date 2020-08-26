@@ -84,8 +84,6 @@ export default function SignUp() {
 
     return (
 
-        // <Container maxWidth="sm">
-        //             <Typography component="div" style={{ backgroundColor: '#7FFF00', height: '100vh' }} />
 
 
         <form className={classes.root} noValidate autoComplete="off" onSubmit={formSubmit} name="form">
@@ -136,7 +134,6 @@ export default function SignUp() {
             </div>
             {submitError && <div>{submitError}</div>}
         </form>
-        // </Container>
 
     );
 }
