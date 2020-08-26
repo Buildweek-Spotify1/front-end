@@ -1,12 +1,8 @@
-import { FETCH_LOG_IN, FETCH_LOG_IN_SUCCESS, FETCH_LOG_IN_ERROR, START_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE } from '../actions'
+import { FETCH_LOG_IN, FETCH_LOG_IN_SUCCESS, FETCH_LOG_IN_ERROR, START_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE, ADD_SONG_TO_PLAYLIST } from '../actions'
 
 
 export const init = {
-  user: {
-    firstName: '',
-    lastName: '',
-    id: -1
-  },
+  user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
   songs: [
     {
       title: 'A Favor House Atlantic',
@@ -103,6 +99,11 @@ export const SongReducer = (state = init, action) => {
         ...state,
         isFetching: false,
         error: action.payload,
+      }
+    case ADD_SONG_TO_PLAYLIST:
+      return {
+        ...state,
+        songs: [...state.songs, action.payload]
       }
     default:
       return state;
