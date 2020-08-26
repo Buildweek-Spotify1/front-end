@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Card, CardActionArea, Typography, Popover, useMediaQuery, useTheme } from '@material-ui/core'
-import useStyles from '../../utilities/Styles'
+import useStyles from '../../../utilities/Styles'
 
 const PlaylistItem = ({ song, setSelectedSong, setModalOpen, ...rest }) => {
   const classes = useStyles()

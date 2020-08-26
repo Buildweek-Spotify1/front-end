@@ -1,39 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useStyles from '../../utilities/Styles';
 import { Container, Typography, TextField, Button } from '@material-ui/core'
 import { useForm } from "../../hooks/useForm";
 import { logIn } from '../../redux/actions';
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, Redirect } from "react-router";
-import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 
 
 
 
-export default function SignIn () {
-    const dispatch = useDispatch()
-    const history = useHistory()
-    const classes = useStyles();
+export default function SignIn() {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const classes = useStyles();
 
 
-    const init = {
-      email: '',
-      password: ''
+  const init = {
+    username: '',
+    password: ''
   }
 
-  const formSchema = yup.object().shape({
-    email: yup.string().min(2, "Minimum 2 characters").required("Email is required"),
 
-    password: yup.string().min(2, "Minimum 2 characters").required("Password is required"),
+  const [formState, inputChange, formSubmit] = useForm(init, () => {
+    dispatch(logIn(formState, () => history.push('/user')))
   });
 
 
-  const [formState, inputChange, formSubmit] = useForm(init, formSchema, () => {
-    dispatch(logIn(formState, () => history.push('/user')))
-});
-    
-    
-    return (
+  return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
@@ -41,14 +34,14 @@ export default function SignIn () {
         </Typography>
         <form className={classes.form} noValidate onSubmit={formSubmit} name="form">
           <TextField
-            id="email"
-            label="Email Address"
+            id="username"
+            label="Username"
             variant="outlined"
             margin="normal"
             required
             fullWidth
             onChange={inputChange}
-            name="email"
+            name="username"
           />
           <TextField
             id="password"
@@ -74,4 +67,5 @@ export default function SignIn () {
       </div>
     </Container>
 
-)}
+  )
+}

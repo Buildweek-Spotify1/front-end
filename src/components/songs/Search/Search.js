@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { GridList, GridListTile, GridListTileBar, TextField, useMediaQuery, useTheme } from '@material-ui/core'
-import useStyles from '../../utilities/Styles'
-import { init } from '../../redux/reducers'
+import useStyles from '../../../utilities/Styles'
+import { init } from '../../../redux/reducers'
 import Axios from 'axios'
 import qs from 'qs'
 import { useDispatch } from 'react-redux'
-import { addToPlaylist } from '../../redux/actions'
+import { addToPlaylist } from '../../../redux/actions'
 import SongModal from './SongModal'
 
 
