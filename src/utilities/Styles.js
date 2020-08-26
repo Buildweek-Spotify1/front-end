@@ -35,9 +35,6 @@ const useStyles = makeStyles(theme => ({
   popover: {
     pointerEvents: 'none',
   },
-  paper: {
-    padding: theme.spacing(1),
-  },
   gridList: {
     width: '100%',
     height: '80vh',
