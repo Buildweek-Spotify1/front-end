@@ -3,13 +3,15 @@ import { Typography, Grid, Accordion, AccordionDetails, AccordionSummary } from 
 import Playlist from './Playlist/Playlist'
 import Search from './Search/Search'
 import useStyles from '../../utilities/Styles'
+import { useSelector } from 'react-redux'
 
 const UserPage = props => {
   const classes = useStyles()
+  const error = useSelector(state => state.error)
   return (
     <div>
       <Grid container spacing={1} justify='space-around'>
-        <Grid item className={classes.playlist}>
+        <Grid item className={classes.playlist} xs={2}>
           <Playlist />
         </Grid>
         <Grid item className={classes.mobilePlaylist}>
@@ -22,10 +24,12 @@ const UserPage = props => {
             </AccordionDetails>
           </Accordion>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           <Search />
         </Grid>
       </Grid>
+
+      {error && <div>{error} </div>}
     </div>
   )
 }

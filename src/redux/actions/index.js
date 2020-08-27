@@ -38,6 +38,8 @@ export const DELETE_PLAYLIST_SUCCESS = 'DELETE_PLAYLIST_SUCCESS'
 export const DELETE_PLAYLIST_FAILURE = 'DELETE_PLAYLIST_FAILURE'
 export const CHANGE_SELECTED_PLAYLIST = 'CHANGE_SELECTED_PLAYLIST'
 
+export const RESET_ERROR = 'RESET_ERROR'
+
 
 export const logIn = (credentials, done) => dispatch => {
   dispatch({ type: FETCH_LOG_IN })
@@ -49,7 +51,10 @@ export const logIn = (credentials, done) => dispatch => {
       done()
     })
     .catch(err => {
-      dispatch({ type: FETCH_LOG_IN_ERROR, payload: err.response.data.message })
+      err.response ?
+        dispatch({ type: FETCH_LOG_IN_ERROR, payload: err.response.data.message })
+        :
+        dispatch({ type: FETCH_LOG_IN_ERROR, payload: 'Sorry, Something went wrong' })
     })
 }
 
@@ -65,7 +70,10 @@ export const signUp = (userInfo, done) => dispatch => {
     })
     .catch(err => {
       debugger
-      dispatch({ type: SIGNUP_FAILURE, payload: err.response.data.message })
+      err.response ?
+        dispatch({ type: SIGNUP_FAILURE, payload: err.response.data.message })
+        :
+        dispatch({ type: SIGNUP_FAILURE, payload: 'Sorry, Something went wrong' })
     })
 }
 
@@ -97,7 +105,10 @@ export const search = searchText => dispatch => {
           dispatch({ type: SEARCH_SUCCESS, payload: newTracks })
         })
         .catch(err => {
-          dispatch({ type: SEARCH_FAILURE, payload: err.response.data.message })
+          err.response ?
+            dispatch({ type: SEARCH_FAILURE, payload: err.response.data.message })
+            :
+            dispatch({ type: SEARCH_FAILURE, payload: 'Sorry, Something went wrong' })
         })
     })
     .catch(err => {
@@ -127,7 +138,10 @@ export const getPlaylists = () => dispatch => {
             dispatch({ type: CHANGE_SELECTED_PLAYLIST, payload: response.data.id })
           })
           .catch(err => {
-            dispatch({ type: SAVE_PLAYLIST_FAILURE, payload: err.response.data.message })
+            err.response ?
+              dispatch({ type: SAVE_PLAYLIST_FAILURE, payload: err.response.data.message })
+              :
+              dispatch({ type: SAVE_PLAYLIST_FAILURE, payload: 'Sorry, Something went wrong' })
           })
       }
       else {
@@ -138,18 +152,24 @@ export const getPlaylists = () => dispatch => {
     })
     .catch(err => {
       debugger
-      dispatch({ type: GET_PLAYLISTS_FAILURE, payload: err.response.data.message })
+      err.response ?
+        dispatch({ type: GET_PLAYLISTS_FAILURE, payload: err.response.data.message })
+        :
+        dispatch({ type: GET_PLAYLISTS_FAILURE, payload: 'Sorry, Something went wrong' })
     })
 }
 
-export const savePlaylist = playlist => dispatch => {
+export const addNewPlaylist = () => dispatch => {
   dispatch({ type: SAVE_PLAYLIST })
-  authAxios().post('/playlists', playlist)
+  authAxios().post('/playlists', { playlist_name: 'New Playlist' })
     .then(res => {
-      dispatch({ type: SAVE_PLAYLIST_SUCCESS, payload: res.data })
+      dispatch({ type: SAVE_PLAYLIST_SUCCESS, payload: { ...res.data, songs: [] } })
     })
     .catch(err => {
-      dispatch({ type: SAVE_PLAYLIST_FAILURE, payload: err.response.data.message })
+      err.response ?
+        dispatch({ type: SAVE_PLAYLIST_FAILURE, payload: err.response.data.message })
+        :
+        dispatch({ type: SAVE_PLAYLIST_FAILURE, payload: 'Sorry, Something went wrong' })
     })
 }
 
@@ -160,7 +180,10 @@ export const changePlaylistName = playlist => dispatch => {
       dispatch({ type: UPDATE_PLAYLIST_NAME_SUCCESS, payload: playlist })
     })
     .catch(err => {
-      dispatch({ type: UPDATE_PLAYLIST_NAME_FAILURE, payload: err.response.data.message })
+      err.response ?
+        dispatch({ type: UPDATE_PLAYLIST_NAME_FAILURE, payload: err.response.data.message })
+        :
+        dispatch({ type: UPDATE_PLAYLIST_NAME_FAILURE, payload: 'Sorry, Something went wrong' })
     })
 }
 
@@ -168,13 +191,22 @@ export const deletePlaylist = id => dispatch => {
   dispatch({ type: DELETE_PLAYLIST })
   authAxios().delete(`/playlists/${id}`)
     .then(res => {
+      debugger
       dispatch({ type: DELETE_PLAYLIST_SUCCESS, payload: id })
     })
-    .then(err => {
-      dispatch({ type: DELETE_PLAYLIST_FAILURE, payload: err.response.data.message })
+    .catch(err => {
+      debugger
+      err.response ?
+        dispatch({ type: DELETE_PLAYLIST_FAILURE, payload: err.response.data.message })
+        :
+        dispatch({ type: DELETE_PLAYLIST_FAILURE, payload: 'Sorry, Something went wrong' })
     })
 }
 
 export const changeSelectedPlaylist = id => {
   return { type: CHANGE_SELECTED_PLAYLIST, payload: id }
+}
+
+export const resetError = () => {
+  return { type: RESET_ERROR }
 }
