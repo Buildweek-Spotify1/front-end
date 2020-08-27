@@ -1,10 +1,11 @@
-import React, { useState, /*useEffect*/ } from 'react'
+import React, { useState, useEffect } from 'react'
 import { GridList, GridListTile, GridListTileBar, TextField, useMediaQuery, useTheme } from '@material-ui/core'
 import useStyles from '../../../utilities/Styles'
 import { init } from '../../../redux/reducers'
 // import Axios from 'axios'
 // import qs from 'qs'
 import SongModal from './SongModal'
+import { authAxios } from '../../../utilities/authAxios'
 
 
 const Search = (props) => {
@@ -13,31 +14,40 @@ const Search = (props) => {
   const [search, setSearch] = useState('')
   const matches = useMediaQuery(useTheme().breakpoints.down('md'))
 
-  // useEffect(() => {
-  // Axios.post('https://accounts.spotify.com/api/token',
-  //   qs.stringify({
-  //     grant_type: 'client_credentials'
-  //   }),
-  //   {
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/x-www-form-urlencoded',
-  //     },
-  //     auth: {
-  //       username: process.env.CLIENT_ID,
-  //       password: process.env.CLIENT_SECRET
-  //     }
-  //   }
-  // )
-  //   .then(res => {
-  //     localStorage.setItem('spotifyToken', res.data.access_token)
-  //     console.log(res)
-  //   })
-  //   .catch(err => {
-  //     debugger
-  //     console.log(err)
-  //   })
-  // }, [])
+  useEffect(() => {
+    // Axios.post('https://accounts.spotify.com/api/token',
+    //   qs.stringify({
+    //     grant_type: 'client_credentials'
+    //   }),
+    //   {
+    //     headers: {
+    //       Accept: 'application/json',
+    //       'Content-Type': 'application/x-www-form-urlencoded',
+    //     },
+    //     auth: {
+    //       username: process.env.CLIENT_ID,
+    //       password: process.env.CLIENT_SECRET
+    //     }
+    //   }
+    // )
+    //   .then(res => {
+    //     localStorage.setItem('spotifyToken', res.data.access_token)
+    //     console.log(res)
+    //   })
+    //   .catch(err => {
+    //     debugger
+    //     console.log(err)
+    //   })
+    debugger
+    authAxios().get('/songs/search')
+      .then(res => {
+        debugger
+        console.log(res)
+      })
+      .catch(err => {
+        debugger
+      })
+  }, [])
 
   const doSearch = e => {
     e.preventDefault()
