@@ -1,8 +1,9 @@
-import { FETCH_LOG_IN, FETCH_LOG_IN_SUCCESS, FETCH_LOG_IN_ERROR, START_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE, ADD_SONG_TO_PLAYLIST, REMOVE_SONG_FROM_PLAYLIST } from '../actions'
+import { FETCH_LOG_IN, FETCH_LOG_IN_SUCCESS, FETCH_LOG_IN_ERROR, START_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE, ADD_SONG_TO_PLAYLIST, REMOVE_SONG_FROM_PLAYLIST, GET_PLAYLISTS, GET_PLAYLISTS_SUCCESS, GET_PLAYLISTS_FAILURE, SAVE_PLAYLIST, SAVE_PLAYLIST_SUCCESS, SAVE_PLAYLIST_FAILURE, UPDATE_PLAYLIST_NAME, UPDATE_PLAYLIST_NAME_SUCCESS, DELETE_PLAYLIST, DELETE_PLAYLIST_SUCCESS, DELETE_PLAYLIST_FAILURE, UPDATE_PLAYLIST_NAME_FAILURE, START_SEARCH, SEARCH_SUCCESS } from '../actions'
 
 
 export const init = {
   user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
+  searchResults: [],
   songs: [
     {
       title: 'A Favor House Atlantic',
@@ -62,6 +63,11 @@ export const init = {
   token: localStorage.getItem('token'),
   isFetching: false,
   error: '',
+  playlists: [{
+    id: 1,
+    playlist_name: 'some_playlist_name',
+    user_id: 1
+  }]
 }
 
 
@@ -115,6 +121,90 @@ export const SongReducer = (state = init, action) => {
       return {
         ...state,
         songs: state.songs.filter(song => song.id !== action.payload)
+      }
+    case GET_PLAYLISTS:
+      return {
+        ...state,
+        error: '',
+        isFetching: true
+      }
+    case GET_PLAYLISTS_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        playlists: action.payload
+      }
+    case GET_PLAYLISTS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload
+      }
+    case SAVE_PLAYLIST:
+      return {
+        ...state,
+        isFetching: true,
+        error: ''
+      }
+    case SAVE_PLAYLIST_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        playlists: [...state.playlists, action.payload]
+      }
+    case SAVE_PLAYLIST_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload
+      }
+    case UPDATE_PLAYLIST_NAME:
+      return {
+        ...state,
+        isFetching: true,
+        error: ''
+      }
+    case UPDATE_PLAYLIST_NAME_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        playlists: state.playlists.map(list => list.id === action.payload.id ? action.payload : list)
+      }
+    case UPDATE_PLAYLIST_NAME_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload
+      }
+    case DELETE_PLAYLIST:
+      return {
+        ...state,
+        isFetching: true,
+        error: ''
+      }
+    case DELETE_PLAYLIST_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        playlists: state.playlists.filter(list => list.id !== action.payload)
+      }
+    case DELETE_PLAYLIST_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload
+      }
+    case START_SEARCH:
+      return {
+        ...state,
+        isFetching: true,
+        error: ''
+      }
+    case SEARCH_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        searchResults: action.payload
       }
     default:
       return state;

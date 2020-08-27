@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+
+import React, { useState, useEffect } from 'react'
 import useStyles from '../../../utilities/Styles'
 import { FormControl, InputLabel, Select, MenuItem, Typography, Button } from '@material-ui/core'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import PlaylistItem from './PlaylistItem'
 import PlaylistModal from './PlaylistModal'
+import { getPlaylists } from '../../../redux/actions'
 
 
 
@@ -12,6 +14,12 @@ const Playlist = (props) => {
   const songs = useSelector(state => state.songs)
   const [selectedSong, setSelectedSong] = useState(songs[0])
   const [modalOpen, setModalOpen] = useState(false)
+  const dispatch = useDispatch()
+  const playlists = useSelector(state => state.playlists)
+
+  useEffect(() => {
+    dispatch(getPlaylists())
+  }, [dispatch])
 
   
 
