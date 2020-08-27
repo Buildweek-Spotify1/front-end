@@ -10,6 +10,10 @@ const useStyles = makeStyles(theme => ({
       width: 200,
     }
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
