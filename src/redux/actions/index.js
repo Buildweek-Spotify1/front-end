@@ -22,8 +22,20 @@ export const SEARCH_SUCCESS = 'SEARCH_SUCCESS'
 export const SEARCH_FAILURE = 'SEARCH_FAILURE'
 
 //Playlist Actions
+export const GET_PLAYLISTS = 'GET_PLAYLISTS'
+export const GET_PLAYLISTS_SUCCESS = 'GET_PLAYLISTS_SUCCESS'
+export const GET_PLAYLISTS_FAILURE = 'GET_PLAYLISTS_FAILURE'
 export const ADD_SONG_TO_PLAYLIST = 'ADD_SONG_TO_PLAYLIST'
 export const REMOVE_SONG_FROM_PLAYLIST = 'REMOVE_SONG_FROM_PLAYLIST'
+export const SAVE_PLAYLIST = 'SAVE_PLAYLIST'
+export const SAVE_PLAYLIST_SUCCESS = 'SAVE_PLAYLIST_SUCCESS'
+export const SAVE_PLAYLIST_FAILURE = 'SAVE_PLAYLIST_FAILURE'
+export const UPDATE_PLAYLIST_NAME = 'UPDATE_PLAYLIST_NAME'
+export const UPDATE_PLAYLIST_NAME_SUCCESS = 'UPDATE_PLAYLIST_NAME_SUCCESS'
+export const UPDATE_PLAYLIST_NAME_FAILURE = 'UPDATE_PLAYLIST_NAME_FAILURE'
+export const DELETE_PLAYLIST = 'DELETE_PLAYLIST'
+export const DELETE_PLAYLIST_SUCCESS = 'DELETE_PLAYLIST_SUCCESS'
+export const DELETE_PLAYLIST_FAILURE = 'DELETE_PLAYLIST_FAILURE'
 
 export const logIn = (credentials, done) => dispatch => {
   dispatch({ type: FETCH_LOG_IN })
@@ -55,6 +67,44 @@ export const signUp = (userInfo, done) => dispatch => {
     })
 }
 
+export const search = searchText => dispatch => {
+  dispatch({ type: START_SEARCH })
+  authAxios().get('/songs/search')
+    .then(res => {
+      debugger
+      Axios({
+        method: 'get',
+        url: `https://api.spotify.com/v1/search?q=${searchText}&type=album,track`,
+        dataType: 'json',
+        headers: {
+          'Authorization': 'Bearer ' + res.data.spotifyToken,
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          console.log(res)
+          let newTracks = []
+          res.data.tracks.items.forEach(track => {
+            newTracks.push({
+              title: track.name,
+              artist: track.artists[0].name,
+              albumCover: track.album.images[0].url,
+              album: track.album.name,
+              id: track.id
+            })
+          })
+          dispatch({ type: SEARCH_SUCCESS, payload: newTracks })
+        })
+        .catch(err => {
+          debugger
+          console.log(err)
+        })
+    })
+    .catch(err => {
+      debugger
+    })
+}
+
 export const addToPlaylist = song => {
   return { type: ADD_SONG_TO_PLAYLIST, payload: song }
 }
@@ -65,4 +115,48 @@ export const removeFromPlaylist = song => {
 
 export const getRecommendedSongs = song => dispatch => {
 
+}
+
+export const getPlaylists = () => dispatch => {
+  dispatch({ type: GET_PLAYLISTS })
+  authAxios().get('/playlists')
+    .then(res => {
+      dispatch({ type: GET_PLAYLISTS_SUCCESS, payload: res.data.playlists })
+    })
+    .catch(err => {
+      dispatch({ type: GET_PLAYLISTS_FAILURE, payload: err.response.data.message })
+    })
+}
+
+export const savePlaylist = playlist => dispatch => {
+  dispatch({ type: SAVE_PLAYLIST })
+  authAxios().post('/playlists', playlist)
+    .then(res => {
+      dispatch({ type: SAVE_PLAYLIST_SUCCESS, payload: res.data })
+    })
+    .catch(err => {
+      dispatch({ type: SAVE_PLAYLIST_FAILURE, payload: err.response.data.message })
+    })
+}
+
+export const changePlaylistName = playlist => dispatch => {
+  dispatch({ type: UPDATE_PLAYLIST_NAME })
+  authAxios().put(`/playlists/${playlist.id}`, playlist)
+    .then(res => {
+      dispatch({ type: UPDATE_PLAYLIST_NAME_SUCCESS, payload: playlist })
+    })
+    .catch(err => {
+      dispatch({ type: UPDATE_PLAYLIST_NAME_FAILURE, payload: err.response.data.message })
+    })
+}
+
+export const deletePlaylist = id => dispatch => {
+  dispatch({ type: DELETE_PLAYLIST })
+  authAxios().delete(`/playlists/${id}`)
+    .then(res => {
+      dispatch({ type: DELETE_PLAYLIST_SUCCESS, payload: id })
+    })
+    .then(err => {
+      dispatch({ type: DELETE_PLAYLIST_FAILURE, payload: err.response.data.message })
+    })
 }
