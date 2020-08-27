@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Button, TextField } from "@material-ui/core"
+import { Button, TextField, Container, Typography } from "@material-ui/core"
 
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../redux/actions";

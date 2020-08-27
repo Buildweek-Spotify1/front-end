@@ -1,3 +1,5 @@
+import { relative } from "path";
+
 const { makeStyles } = require("@material-ui/core");
 
 const useStyles = makeStyles(theme => ({
@@ -72,6 +74,23 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     paddingTop: '100%'
   },
+  editText: {
+    width: '275px'
+  },
+  editTextFontSize: {
+    fontSize: '2.5rem',
+    textAlign: 'center'
+  },
+  playlistButtons: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    [theme.breakpoints.down('md')]: {
+      position: 'relative',
+      bottom: 0,
+      marginTop: '10px'
+    }
+  }
 }))
 
 export default useStyles

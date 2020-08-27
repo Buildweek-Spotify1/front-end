@@ -3,7 +3,7 @@ import useStyles from '../../utilities/Styles';
 import { Container, Typography, TextField, Button } from '@material-ui/core'
 import { useForm } from "../../hooks/useForm";
 import { logIn } from '../../redux/actions';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Redirect } from "react-router";
 
 
@@ -13,6 +13,7 @@ export default function SignIn() {
   const dispatch = useDispatch()
   const history = useHistory()
   const classes = useStyles();
+  const error = useSelector(state => state.error)
 
 
   const init = {
@@ -68,6 +69,7 @@ export default function SignIn() {
             Sign In
           </Button>
         </form>
+        {error && <div>{error} </div>}
       </div>
     </Container>
 

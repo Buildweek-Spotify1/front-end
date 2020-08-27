@@ -5,11 +5,18 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import { SongReducer } from './redux/reducers';
+import thunk from 'redux-thunk'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux';
 
+const store = createStore(SongReducer, applyMiddleware(thunk))
 ReactDOM.render(
+
   <Router>
-    <App />
-  </Router>,
+    <Provider store={store}><App /></Provider>
+  </Router>
+  ,
   document.getElementById('root')
 );
 

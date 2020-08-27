@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-import { Route } from 'react-router-dom'
+import { Route, useLocation } from 'react-router-dom'
 
 //Redux Imports
-import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import { SongReducer } from './redux/reducers';
-import thunk from 'redux-thunk'
+import { Provider, useDispatch } from 'react-redux'
 
 //component imports
 import UserPage from './components/songs/UserPage';
@@ -14,18 +11,26 @@ import SignUp from './components/signup/SignUp'
 import PrivateRoute from './utilities/PrivateRoute'
 import Header from './components/header/Header'
 import SignIn from './components/signin/SignIn'
+import { resetError } from './redux/actions';
 
 console.log(process.env.CLIENT_ID)
-const store = createStore(SongReducer, applyMiddleware(thunk))
+
 
 function App() {
+  const location = useLocation()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(resetError())
+  }, [location])
 
   return (
-    <Provider store={store}>
+
+    <div>
       <Header />
-        <Route path="/signin">
-          <SignIn />
-        </Route>
+      <Route path="/signin">
+        <SignIn />
+      </Route>
       <div className="App">
         <Route exact path="/">
           <SignUp />
@@ -33,7 +38,7 @@ function App() {
 
         <PrivateRoute path='/user' component={UserPage} />
       </div>
-    </Provider>
+    </div>
   );
 }
 

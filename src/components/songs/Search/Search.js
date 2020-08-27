@@ -16,36 +16,6 @@ const Search = (props) => {
   const doSearch = e => {
     e.preventDefault()
     dispatch(search(searchText))
-    // Axios({
-    //   method: 'get',
-    //   url: `https://api.spotify.com/v1/search?q=${search}&type=album,track`,
-    //   dataType: 'json',
-    //   headers: {
-    //     'Authorization': 'Bearer ' + localStorage.getItem('spotifyToken'),
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    //   .then(res => {
-    //     console.log(res)
-    //     let newTracks = []
-    //     res.data.tracks.items.forEach(track => {
-    //       newTracks.push({
-    //         title: track.name,
-    //         artist: track.artists[0].name,
-    //         albumCover: track.album.images[0].url,
-    //         album: track.album.name
-    //         id: track.id
-    //       })
-    //     })
-    //     console.log(newTracks)
-
-    //     setSongs(newTracks)
-    //   })
-    //   .catch(err => {
-    //     debugger
-    //     console.log(err)
-    //   })
-
   }
 
   const handleChange = e => {
@@ -63,8 +33,8 @@ const Search = (props) => {
 
   return (
     <div>
-      <form onSubmit={doSearch}><TextField label='search' value={searchText} onChange={handleChange} /></form>
-      <GridList cellHeight={matches ? 250 : 450} className={classes.gridList} cols={matches ? 2 : 4}>
+      <form onSubmit={doSearch}><TextField fullWidth label='search' value={searchText} onChange={handleChange} /></form>
+      <GridList cellHeight={matches ? 250 : 450} className={classes.gridList} cols={matches ? 2 : 3}>
         {songs.map(song => (
           <GridListTile onClick={e => addSongToPlaylist(song)} key={`${song.title}${song.albumCover}`} cols={1}>
             <img src={song.albumCover} alt={song.title} />

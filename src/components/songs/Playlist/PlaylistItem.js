@@ -16,7 +16,7 @@ const PlaylistItem = ({ song, setSelectedSong, setModalOpen, ...rest }) => {
   const open = Boolean(popoverAnchor)
   const matches = useMediaQuery(useTheme().breakpoints.down('md'))
   return (
-    <div>
+    <div style={{ width: '100%', textAlign: 'left' }}>
       <Card variant='outlined'>
         <CardActionArea onClick={() => {
           setSelectedSong(song)

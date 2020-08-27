@@ -1,16 +1,15 @@
-import React, { useState, } from 'react'
+import React, { useState, useEffect, } from 'react'
 import { AppBar, Container, Toolbar, Typography, Button } from '@material-ui/core'
 import { useHistory, useLocation } from 'react-router'
 
 const Header = (props) => {
   const history = useHistory()
   const location = useLocation()
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token') !== null)
 
   useEffect(() => {
-      setLoggedIn(localStorage.getItem('token') !== null)
-  }, [location]);
-
-  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token') !== null)
+    setLoggedIn(localStorage.getItem('token') !== null)
+  }, [location])
 
 
   return (
