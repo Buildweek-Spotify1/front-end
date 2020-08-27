@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, TextField } from "@material-ui/core"
 
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../redux/actions";
 import useStyles from "../../utilities/Styles";
 import * as yup from "yup";
+// import axios from 'axios'
 import { useHistory, Redirect } from "react-router";
 import { useFormValidation } from "../../hooks/useForm";
 
@@ -13,6 +14,9 @@ export default function SignUp() {
     const classes = useStyles();
     const history = useHistory()
     const submitError = useSelector(state => state.error)
+
+    // const [serverError, setServerError] = useState("");
+    // const [buttonDisabled, setButtonDisabled] = useState(true);
 
     const init = {
         firstName: '',
@@ -35,6 +39,28 @@ export default function SignUp() {
         dispatch(signUp(formState, () => history.push('/user')))
     })
 
+    // const axiosCall = (e) => {
+    // e.preventDefault();
+    // console.log("form submitted!");
+
+    //     axios
+    //         .post("https://reqres.in/api/users", formState)
+    //         .then((res) => {
+    //         console.log("success!");
+    //         setServerError(null);
+    //         setFormState({
+    //             firstName: '',
+    //             lastName: '',
+    //             username: '',
+    //             password: ''
+    //         });
+    //         })
+    //         .catch((err) => {
+    //             setServerError("oops! something happened!");
+    //         });
+    // };
+
+
 
     if (localStorage.getItem('token')) {
         return <Redirect to='/user' />
@@ -46,6 +72,8 @@ export default function SignUp() {
 
 
         <form className={classes.root} noValidate autoComplete="off" onSubmit={formSubmit} name="form">
+            {/* {serverError ? <p className="error">{serverError}</p> : null} */}
+
             <TextField
                 id="outlined-basic"
                 error={errors.firstName}
@@ -87,7 +115,11 @@ export default function SignUp() {
                 name={'password'}
             />
             <div className={classes.submit}>
-                <Button variant="contained" color="primary" disableElevation onClick={formSubmit}>
+                <Button 
+                variant="contained" 
+                color="primary" 
+                disableElevation 
+                onClick={formSubmit}>
                     Submit
                 </Button>
             </div>

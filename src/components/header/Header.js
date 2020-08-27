@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 import { AppBar, Container, Toolbar, Typography, Button } from '@material-ui/core'
-import { useHistory } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 
 const Header = () => {
   const history = useHistory()
+  const location = useLocation()
+
+  useEffect(() => {
+      setLoggedIn(localStorage.getItem('token') !== null)
+  }, [location]);
+
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token') !== null)
   return (
     <AppBar position="static" color="primary">
