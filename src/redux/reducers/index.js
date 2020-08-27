@@ -1,8 +1,9 @@
-import { FETCH_LOG_IN, FETCH_LOG_IN_SUCCESS, FETCH_LOG_IN_ERROR, START_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE, ADD_SONG_TO_PLAYLIST, REMOVE_SONG_FROM_PLAYLIST, GET_PLAYLISTS, GET_PLAYLISTS_SUCCESS, GET_PLAYLISTS_FAILURE, SAVE_PLAYLIST, SAVE_PLAYLIST_SUCCESS, SAVE_PLAYLIST_FAILURE, UPDATE_PLAYLIST_NAME, UPDATE_PLAYLIST_NAME_SUCCESS, DELETE_PLAYLIST, DELETE_PLAYLIST_SUCCESS, DELETE_PLAYLIST_FAILURE, UPDATE_PLAYLIST_NAME_FAILURE } from '../actions'
+import { FETCH_LOG_IN, FETCH_LOG_IN_SUCCESS, FETCH_LOG_IN_ERROR, START_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE, ADD_SONG_TO_PLAYLIST, REMOVE_SONG_FROM_PLAYLIST, GET_PLAYLISTS, GET_PLAYLISTS_SUCCESS, GET_PLAYLISTS_FAILURE, SAVE_PLAYLIST, SAVE_PLAYLIST_SUCCESS, SAVE_PLAYLIST_FAILURE, UPDATE_PLAYLIST_NAME, UPDATE_PLAYLIST_NAME_SUCCESS, DELETE_PLAYLIST, DELETE_PLAYLIST_SUCCESS, DELETE_PLAYLIST_FAILURE, UPDATE_PLAYLIST_NAME_FAILURE, START_SEARCH, SEARCH_SUCCESS } from '../actions'
 
 
 export const init = {
   user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
+  searchResults: [],
   songs: [
     {
       title: 'A Favor House Atlantic',
@@ -192,6 +193,18 @@ export const SongReducer = (state = init, action) => {
         ...state,
         isFetching: false,
         error: action.payload
+      }
+    case START_SEARCH:
+      return {
+        ...state,
+        isFetching: true,
+        error: ''
+      }
+    case SEARCH_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        searchResults: action.payload
       }
     default:
       return state;

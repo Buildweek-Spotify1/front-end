@@ -1,57 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { GridList, GridListTile, GridListTileBar, TextField, useMediaQuery, useTheme } from '@material-ui/core'
 import useStyles from '../../../utilities/Styles'
-import { init } from '../../../redux/reducers'
-// import Axios from 'axios'
-// import qs from 'qs'
 import SongModal from './SongModal'
-import { authAxios } from '../../../utilities/authAxios'
+import { useDispatch, useSelector } from 'react-redux'
+import { search } from '../../../redux/actions'
 
 
 const Search = (props) => {
   const classes = useStyles()
-  const [songs, setSongs] = useState([])
-  const [search, setSearch] = useState('')
+  const songs = useSelector(state => state.searchResults)
+  const [searchText, setSearchText] = useState('')
   const matches = useMediaQuery(useTheme().breakpoints.down('md'))
-
-  useEffect(() => {
-    // Axios.post('https://accounts.spotify.com/api/token',
-    //   qs.stringify({
-    //     grant_type: 'client_credentials'
-    //   }),
-    //   {
-    //     headers: {
-    //       Accept: 'application/json',
-    //       'Content-Type': 'application/x-www-form-urlencoded',
-    //     },
-    //     auth: {
-    //       username: process.env.CLIENT_ID,
-    //       password: process.env.CLIENT_SECRET
-    //     }
-    //   }
-    // )
-    //   .then(res => {
-    //     localStorage.setItem('spotifyToken', res.data.access_token)
-    //     console.log(res)
-    //   })
-    //   .catch(err => {
-    //     debugger
-    //     console.log(err)
-    //   })
-    debugger
-    authAxios().get('/songs/search')
-      .then(res => {
-        debugger
-        console.log(res)
-      })
-      .catch(err => {
-        debugger
-      })
-  }, [])
+  const dispatch = useDispatch()
 
   const doSearch = e => {
     e.preventDefault()
-
+    dispatch(search(searchText))
     // Axios({
     //   method: 'get',
     //   url: `https://api.spotify.com/v1/search?q=${search}&type=album,track`,
@@ -82,13 +46,10 @@ const Search = (props) => {
     //     console.log(err)
     //   })
 
-
-    setSongs(init.songs)
-
   }
 
   const handleChange = e => {
-    setSearch(e.target.value)
+    setSearchText(e.target.value)
   }
 
   const [modalOpen, setModalOpen] = useState(false)
@@ -102,7 +63,7 @@ const Search = (props) => {
 
   return (
     <div>
-      <form onSubmit={doSearch}><TextField label='search' value={search} onChange={handleChange} /></form>
+      <form onSubmit={doSearch}><TextField label='search' value={searchText} onChange={handleChange} /></form>
       <GridList cellHeight={matches ? 250 : 450} className={classes.gridList} cols={matches ? 2 : 4}>
         {songs.map(song => (
           <GridListTile onClick={e => addSongToPlaylist(song)} key={`${song.title}${song.albumCover}`} cols={1}>

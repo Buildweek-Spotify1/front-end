@@ -67,6 +67,44 @@ export const signUp = (userInfo, done) => dispatch => {
     })
 }
 
+export const search = searchText => dispatch => {
+  dispatch({ type: START_SEARCH })
+  authAxios().get('/songs/search')
+    .then(res => {
+      debugger
+      Axios({
+        method: 'get',
+        url: `https://api.spotify.com/v1/search?q=${searchText}&type=album,track`,
+        dataType: 'json',
+        headers: {
+          'Authorization': 'Bearer ' + res.data.spotifyToken,
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          console.log(res)
+          let newTracks = []
+          res.data.tracks.items.forEach(track => {
+            newTracks.push({
+              title: track.name,
+              artist: track.artists[0].name,
+              albumCover: track.album.images[0].url,
+              album: track.album.name,
+              id: track.id
+            })
+          })
+          dispatch({ type: SEARCH_SUCCESS, payload: newTracks })
+        })
+        .catch(err => {
+          debugger
+          console.log(err)
+        })
+    })
+    .catch(err => {
+      debugger
+    })
+}
+
 export const addToPlaylist = song => {
   return { type: ADD_SONG_TO_PLAYLIST, payload: song }
 }
