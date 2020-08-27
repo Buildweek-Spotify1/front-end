@@ -68,6 +68,13 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     paddingTop: '100%'
   },
+  editText: {
+    width: '275px'
+  },
+  editTextFontSize: {
+    fontSize: '2.5rem',
+    textAlign: 'center'
+  },
 }))
 
 export default useStyles
