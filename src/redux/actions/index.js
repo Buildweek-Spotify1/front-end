@@ -26,7 +26,11 @@ export const GET_PLAYLISTS = 'GET_PLAYLISTS'
 export const GET_PLAYLISTS_SUCCESS = 'GET_PLAYLISTS_SUCCESS'
 export const GET_PLAYLISTS_FAILURE = 'GET_PLAYLISTS_FAILURE'
 export const ADD_SONG_TO_PLAYLIST = 'ADD_SONG_TO_PLAYLIST'
+export const ADD_SONG_TO_PLAYLIST_SUCCESS = 'ADD_SONG_TO_PLAYLIST_SUCCESS'
+export const ADD_SONG_TO_PLAYLIST_FAILURE = 'ADD_SONG_TO_PLAYLIST_FAILURE'
 export const REMOVE_SONG_FROM_PLAYLIST = 'REMOVE_SONG_FROM_PLAYLIST'
+export const REMOVE_SONG_FROM_PLAYLIST_SUCCESS = 'REMOVE_SONG_FROM_PLAYLIST_SUCCESS'
+export const REMOVE_SONG_FROM_PLAYLIST_FAILURE = 'REMOVE_SONG_FROM_PLAYLIST_FAILURE'
 export const SAVE_PLAYLIST = 'SAVE_PLAYLIST'
 export const SAVE_PLAYLIST_SUCCESS = 'SAVE_PLAYLIST_SUCCESS'
 export const SAVE_PLAYLIST_FAILURE = 'SAVE_PLAYLIST_FAILURE'
@@ -37,6 +41,11 @@ export const DELETE_PLAYLIST = 'DELETE_PLAYLIST'
 export const DELETE_PLAYLIST_SUCCESS = 'DELETE_PLAYLIST_SUCCESS'
 export const DELETE_PLAYLIST_FAILURE = 'DELETE_PLAYLIST_FAILURE'
 export const CHANGE_SELECTED_PLAYLIST = 'CHANGE_SELECTED_PLAYLIST'
+
+//Recommend Actions
+export const GET_RECOMMENDATIONS = 'GET_RECOMMENDATIONS'
+export const GET_RECOMENDATIONS_SUCCESS = 'GET_RECOMENDATIONS_SUCCESS'
+export const GET_RECOMENDATIONS_ERROR = 'GET_RECOMENDATIONS_ERROR'
 
 export const RESET_ERROR = 'RESET_ERROR'
 
@@ -62,14 +71,12 @@ export const signUp = (userInfo, done) => dispatch => {
   dispatch({ type: START_SIGNUP })
   Axios.post(`https://spotify1-pt-bw.herokuapp.com/api/auth/signup`, userInfo)
     .then(res => {
-      debugger
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('user', JSON.stringify(res.data.createdUser))
       dispatch({ type: SIGNUP_SUCCESS, payload: res.data })
       done()
     })
     .catch(err => {
-      debugger
       err.response ?
         dispatch({ type: SIGNUP_FAILURE, payload: err.response.data.message })
         :
@@ -115,16 +122,43 @@ export const search = searchText => dispatch => {
     })
 }
 
-export const addToPlaylist = song => {
-  return { type: ADD_SONG_TO_PLAYLIST, payload: song }
+export const addToPlaylist = (playlistId, song) => dispatch => {
+  dispatch({ type: ADD_SONG_TO_PLAYLIST })
+  authAxios().post(`/playlists/${playlistId}/songs`, song)
+    .then(res => {
+      dispatch({ type: ADD_SONG_TO_PLAYLIST_SUCCESS, payload: res.data })
+    })
+    .catch(err => {
+      err.response ?
+        dispatch({ type: ADD_SONG_TO_PLAYLIST_FAILURE, payload: err.response.data.message })
+        :
+        dispatch({ type: ADD_SONG_TO_PLAYLIST_FAILURE, payload: 'Sorry, Something went wrong' })
+    })
 }
 
-export const removeFromPlaylist = song => {
-  return { type: REMOVE_SONG_FROM_PLAYLIST, payload: song.id }
+export const removeFromPlaylist = (playlistId, songId) => dispatch => {
+  dispatch({ type: REMOVE_SONG_FROM_PLAYLIST })
+  authAxios().delete(`/playlists/${playlistId}/songs/${songId}`)
+    .then(res => {
+      dispatch({ type: REMOVE_SONG_FROM_PLAYLIST_SUCCESS, payload: { ...res.data, id: parseInt(res.data.id) } })
+    })
+    .catch(err => {
+      err.response ?
+        dispatch({ type: REMOVE_SONG_FROM_PLAYLIST_FAILURE, payload: err.response.data.message })
+        :
+        dispatch({ type: REMOVE_SONG_FROM_PLAYLIST_FAILURE, payload: 'Sorry, Something went wrong' })
+    })
 }
 
 export const getRecommendedSongs = song => dispatch => {
-
+  dispatch({ type: GET_RECOMMENDATIONS })
+  Axios.get(`https://spotifydsapp.herokuapp.com/song/${song.id}`)
+    .then(res => {
+      debugger
+    })
+    .catch(err => {
+      debugger
+    })
 }
 
 export const getPlaylists = () => dispatch => {
@@ -145,13 +179,21 @@ export const getPlaylists = () => dispatch => {
           })
       }
       else {
-        let newPlaylists = res.data.playlists.map(list => { return { ...list, songs: [] } })
-        dispatch({ type: GET_PLAYLISTS_SUCCESS, payload: newPlaylists })
-        dispatch({ type: CHANGE_SELECTED_PLAYLIST, payload: res.data.playlists[0].id })
+        let promises = []
+        let newPlaylists = []
+        res.data.playlists.forEach(list => {
+          promises.push(authAxios().get(`/playlists/${list.id}/songs`))
+        })
+        Axios.all(promises).then(Axios.spread((...responses) => {
+          dispatch({
+            type: GET_PLAYLISTS_SUCCESS,
+            payload: responses.map(res => { return { ...res.data, id: parseInt(res.data.id) } })
+          })
+          dispatch({ type: CHANGE_SELECTED_PLAYLIST, payload: res.data.playlists[0].id })
+        }))
       }
     })
     .catch(err => {
-      debugger
       err.response ?
         dispatch({ type: GET_PLAYLISTS_FAILURE, payload: err.response.data.message })
         :
@@ -191,11 +233,9 @@ export const deletePlaylist = id => dispatch => {
   dispatch({ type: DELETE_PLAYLIST })
   authAxios().delete(`/playlists/${id}`)
     .then(res => {
-      debugger
       dispatch({ type: DELETE_PLAYLIST_SUCCESS, payload: id })
     })
     .catch(err => {
-      debugger
       err.response ?
         dispatch({ type: DELETE_PLAYLIST_FAILURE, payload: err.response.data.message })
         :
