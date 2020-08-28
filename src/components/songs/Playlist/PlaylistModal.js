@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, Card, CardMedia, CardContent, Typography, Button, CardActions } from '@material-ui/core'
 import useStyles from '../../../utilities/Styles'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { removeFromPlaylist, getRecommendedSongs } from '../../../redux/actions'
 
 
@@ -9,6 +9,7 @@ import { removeFromPlaylist, getRecommendedSongs } from '../../../redux/actions'
 const PlaylistModal = ({ song, ...props }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const selectedPlaylist = useSelector(state => state.selectedPlaylist)
   const handleClose = () => {
     props.setOpen(false)
   }
@@ -38,13 +39,13 @@ const PlaylistModal = ({ song, ...props }) => {
           </CardContent>
           <CardActions>
             <Button size='small' onClick={() => {
-              dispatch(removeFromPlaylist(song))
+              dispatch(removeFromPlaylist(selectedPlaylist.id, song.id))
               props.setOpen(false)
             }
             }>Remove from Playlist</Button>
             <Button size='small' onClick={() => {
               props.setOpen(false)
-              getRecommendedSongs(song)
+              dispatch(getRecommendedSongs(song))
             }} >Suggest Songs</Button>
           </CardActions>
         </Card>
