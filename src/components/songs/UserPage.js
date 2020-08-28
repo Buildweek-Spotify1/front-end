@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Typography, Grid, Accordion, AccordionDetails, AccordionSummary } from '@material-ui/core'
 import Playlist from './Playlist/Playlist'
 import Search from './Search/Search'
 import useStyles from '../../utilities/Styles'
 import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
+import { checkExpired } from '../../utilities/checkExpired'
 
 const UserPage = props => {
   const classes = useStyles()
   const error = useSelector(state => state.error)
+  const history = useHistory()
+
+  useEffect(() => {
+    if (checkExpired()) {
+      history.push('/')
+    }
+  })
+
   return (
     <div>
       <Grid container spacing={1} justify='space-around'>

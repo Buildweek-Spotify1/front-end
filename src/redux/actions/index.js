@@ -61,6 +61,7 @@ export const logIn = (credentials, done) => dispatch => {
     .then(res => {
       dispatch({ type: FETCH_LOG_IN_SUCCESS, payload: res.data })
       localStorage.setItem('token', res.data.token)
+      localStorage.setItem('logTime', Date.now())
       done()
     })
     .catch(err => {
@@ -81,6 +82,7 @@ export const signUp = (userInfo, done) => dispatch => {
     .then(res => {
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('user', JSON.stringify(res.data.createdUser))
+      localStorage.setItem('logTime', Date.now())
       dispatch({ type: SIGNUP_SUCCESS, payload: res.data })
       done()
     })
