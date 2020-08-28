@@ -36,3 +36,313 @@
     transform: rotate(360deg);
   }
 }
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.background {
+    background-image: url(img/music-1400x1000.png)
+}
+
+
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 100px;
+    color: red
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: x-large;
+    color: purple;
+}
+
+.nav :hover {
+    color: white;
+}
+
+.verticalbar {
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    font-size: 70px;
+    color: white
+}
+
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-left: 100px;
+    margin-top: 30px;
+    border-radius: 40px;
+    color: white;
+    font-size: 30px;
+    width: 200px;
+    height: 40px;
+    background-color: turquoise;
+    border: none;
+}
+
+.button:hover {
+    background-color: white;
+}
+
+.middle {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+    margin-top: 150px;
+    font-size: 40px;
+    color: white
+}
+
+.footer {
+    background-image: url(img/equalizer-1-1400x300.png);
+    margin-top: 200px;
+}
+
+.copyrite {
+    text-align: center;
+    font-size: 20px;
+    color: red;
+    background-color: white;
+}
+
+
+.roy img {
+    width: 250px;
+    height: 250px;
+    background-image: url(img/roy.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.aaron img {
+    width: 250px;
+    height: 250px;
+    background-image: url(img/Aaron.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.allison img {
+    width: 250px;
+    height: 250px;
+    background-image: url(img/allison.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.danny img {
+    width: 250px;
+    height: 250px;
+    background-image: url(img/danny.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.dom img {
+    width: 250px;
+    height: 250px;
+    background-image: url(img/dominique.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.henry img {
+    width: 250px;
+    height: 250px;  
+    background-image: url(img/henry.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.jason img {
+    width: 250px;
+    height: 250px;   
+    background-image: url(img/jason.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.jen img {
+    width: 250px;
+    height: 250px; 
+    background-image: url(img/jennifer.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.rowais img {
+    width: 250px;
+    height: 250px;  
+    background-image: url(img/rowais.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.baisali img {
+    width: 250px;
+    height: 250px;
+    background-image: url(img/profile-picture.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+.team {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-left: 30px;
+    color: white;
+    font-family: cursive;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 25px;
+    line-height: 25px;
+    margin-top: 0px;
+}
+
+.name {
+    margin-top: 100px;
+}
+
+.eq {
+    background-image: url(img/equalizer-1-1400x300.png);
+    margin-top: 100px;
+}
+
+.greeting {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 50px;
+    line-height: 50px;
+    margin-top: 20px;
+    color: white;
+    margin-top: 150px;
+}
+
+
+.top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    font-weight: 500;
+    font-size: 50px;
+}
+
+.top :hover {
+    color: white;
+}
+
+.glow {
+    color: #fff;
+  
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+  }
+
+@keyframes glow {
+    from {
+      text-shadow: 0 0 10px rebeccapurple, 0 0 20px rebeccapurple, 0 0 30px rebeccapurple,
+        0 0 40px rebeccapurple, 0 0 50px rebeccapurple, 0 0 60px rebeccapurple, 0 0 70px rebeccapurple;
+}
+  
+    to {
+      text-shadow: 0 0 20px red, 0 0 30px red, 0 0 40px red,
+        0 0 50px red, 0 0 60px red, 0 0 70px red, 0 0 80px red;
+    }
+  }
+
+@media (max-width: 500px) {
+
+}
+
