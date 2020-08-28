@@ -160,9 +160,27 @@ export const removeFromPlaylist = (playlistId, songId) => dispatch => {
 
 export const getRecommendedSongs = song => dispatch => {
   dispatch({ type: GET_RECOMMENDATIONS })
-  Axios.get(`https://spotifydsapp.herokuapp.com/song/6VjBxj5OhlHqL4h5qwo6gL`)
+  Axios({
+    method: 'get',
+    url: `https://suggestords2.herokuapp.com/suggestions`,
+    dataType: 'json',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    params: {
+      title: song.title,
+      artist: song.artist
+    }
+  })
     .then(res => {
       debugger
+      let newTracks = res.data.tracks.map(track => {
+        return {
+          ...track.info,
+          albumCover: track.info.image,
+        }
+      })
+      dispatch({ type: SEARCH_SUCCESS, payload: newTracks })
     })
     .catch(err => {
       debugger
