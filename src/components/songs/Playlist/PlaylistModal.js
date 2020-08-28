@@ -3,6 +3,8 @@ import { Modal, Card, CardMedia, CardContent, Typography, Button, CardActions } 
 import useStyles from '../../../utilities/Styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeFromPlaylist, getRecommendedSongs } from '../../../redux/actions'
+import { checkExpired } from '../../../utilities/checkExpired'
+import { useHistory } from 'react-router'
 
 
 
@@ -10,6 +12,7 @@ const PlaylistModal = ({ song, ...props }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
   const selectedPlaylist = useSelector(state => state.selectedPlaylist)
+  const history = useHistory()
   const handleClose = () => {
     props.setOpen(false)
   }
@@ -39,12 +42,18 @@ const PlaylistModal = ({ song, ...props }) => {
           </CardContent>
           <CardActions>
             <Button size='small' onClick={() => {
+              if (checkExpired()) {
+                history.push('/')
+              }
               dispatch(removeFromPlaylist(selectedPlaylist.id, song.id))
               props.setOpen(false)
             }
             }>Remove from Playlist</Button>
             <Button size='small' onClick={() => {
               props.setOpen(false)
+              if (checkExpired()) {
+                history.push('/')
+              }
               dispatch(getRecommendedSongs(song))
             }} >Suggest Songs</Button>
           </CardActions>

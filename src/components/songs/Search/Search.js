@@ -4,6 +4,8 @@ import useStyles from '../../../utilities/Styles'
 import SongModal from './SongModal'
 import { useDispatch, useSelector } from 'react-redux'
 import { search } from '../../../redux/actions'
+import { checkExpired } from '../../../utilities/checkExpired'
+import { useHistory } from 'react-router'
 
 
 const Search = (props) => {
@@ -12,9 +14,13 @@ const Search = (props) => {
   const [searchText, setSearchText] = useState('')
   const matches = useMediaQuery(useTheme().breakpoints.down('md'))
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const doSearch = e => {
     e.preventDefault()
+    if (checkExpired()) {
+      history.push('/')
+    }
     dispatch(search(searchText))
   }
 

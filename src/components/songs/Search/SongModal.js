@@ -3,11 +3,14 @@ import { Modal, Card, CardMedia, CardContent, Typography, Button, CardActions } 
 import useStyles from '../../../utilities/Styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToPlaylist, getRecommendedSongs } from '../../../redux/actions'
+import { useHistory } from 'react-router'
+import { checkExpired } from '../../../utilities/checkExpired'
 
 
 
 const SongModal = ({ song, ...props }) => {
   const classes = useStyles()
+  const history = useHistory()
   const dispatch = useDispatch()
   const selectedPlaylist = useSelector(state => state.selectedPlaylist)
   const handleClose = () => {
@@ -39,10 +42,16 @@ const SongModal = ({ song, ...props }) => {
           </CardContent>
           <CardActions>
             <Button size='small' onClick={() => {
+              if (checkExpired()) {
+                history.push('/')
+              }
               dispatch(addToPlaylist(selectedPlaylist.id, song))
               props.setOpen(false)
             }}>Add To Playlist</Button>
             <Button size='small' onClick={() => {
+              if (checkExpired()) {
+                history.push('/')
+              }
               dispatch(getRecommendedSongs(song))
               props.setOpen(false)
             }}>Suggest Songs</Button>
