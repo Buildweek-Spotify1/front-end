@@ -12,6 +12,8 @@ import PrivateRoute from './utilities/PrivateRoute'
 import Header from './components/header/Header'
 import SignIn from './components/signin/SignIn'
 import { resetError } from './redux/actions';
+import Home from './components/marketing/Home';
+import About from './components/marketing/About';
 
 console.log(process.env.CLIENT_ID)
 
@@ -27,12 +29,21 @@ function App() {
   return (
 
     <div>
-      <Header />
+      <Route render={({ location }) =>
+        location.pathname !== '/' && location.pathname !== '/about' ? (
+          <Header />) : null
+      } />
       <Route path="/signin">
         <SignIn />
       </Route>
+      <Route exact path='/'>
+        <Home />
+      </Route>
+      <Route path='/about'>
+        <About />
+      </Route>
       <div className="App">
-        <Route exact path="/">
+        <Route exact path="/signup">
           <SignUp />
         </Route>
 
