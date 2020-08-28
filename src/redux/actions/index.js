@@ -173,17 +173,19 @@ export const getRecommendedSongs = song => dispatch => {
     }
   })
     .then(res => {
-      debugger
       let newTracks = res.data.tracks.map(track => {
         return {
-          ...track.info,
+          title: track.info.title,
+          album: track.info.album,
+          artist: track.info.artist,
           albumCover: track.info.image,
+          id: track.info.id
         }
       })
       dispatch({ type: SEARCH_SUCCESS, payload: newTracks })
     })
     .catch(err => {
-      debugger
+      dispatch({ type: SEARCH_FAILURE, payload: 'Could not retrieve recommendations' })
     })
 }
 

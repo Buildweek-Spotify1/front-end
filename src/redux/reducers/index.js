@@ -166,7 +166,6 @@ export const SongReducer = (state = init, action) => {
         error: ''
       }
     case DELETE_PLAYLIST_SUCCESS: {
-      debugger
       return {
         ...state,
         isFetching: false,
