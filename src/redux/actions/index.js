@@ -49,7 +49,11 @@ export const GET_RECOMENDATIONS_ERROR = 'GET_RECOMENDATIONS_ERROR'
 
 export const RESET_ERROR = 'RESET_ERROR'
 
-
+/**
+ * Redux Action to log into the site
+ * @param {object} credentials user login information {username: {string} password: {string}}
+ * @param {function} done callback to excecute after a successful login
+ */
 export const logIn = (credentials, done) => dispatch => {
   dispatch({ type: FETCH_LOG_IN })
 
@@ -66,7 +70,11 @@ export const logIn = (credentials, done) => dispatch => {
         dispatch({ type: FETCH_LOG_IN_ERROR, payload: 'Sorry, Something went wrong' })
     })
 }
-
+/**
+ * Redux Action to sign a new user up to the service
+ * @param {*} userInfo 
+ * @param {*} done 
+ */
 export const signUp = (userInfo, done) => dispatch => {
   dispatch({ type: START_SIGNUP })
   Axios.post(`https://spotify1-pt-bw.herokuapp.com/api/auth/signup`, userInfo)
@@ -126,7 +134,7 @@ export const addToPlaylist = (playlistId, song) => dispatch => {
   dispatch({ type: ADD_SONG_TO_PLAYLIST })
   authAxios().post(`/playlists/${playlistId}/songs`, song)
     .then(res => {
-      dispatch({ type: ADD_SONG_TO_PLAYLIST_SUCCESS, payload: res.data })
+      dispatch({ type: ADD_SONG_TO_PLAYLIST_SUCCESS, payload: { ...res.data, id: parseInt(res.data.id) } })
     })
     .catch(err => {
       err.response ?
@@ -152,7 +160,7 @@ export const removeFromPlaylist = (playlistId, songId) => dispatch => {
 
 export const getRecommendedSongs = song => dispatch => {
   dispatch({ type: GET_RECOMMENDATIONS })
-  Axios.get(`https://spotifydsapp.herokuapp.com/song/${song.id}`)
+  Axios.get(`https://spotifydsapp.herokuapp.com/song/6VjBxj5OhlHqL4h5qwo6gL`)
     .then(res => {
       debugger
     })
