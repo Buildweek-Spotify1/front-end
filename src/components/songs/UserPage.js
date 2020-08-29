@@ -14,7 +14,7 @@ const UserPage = props => {
 
   useEffect(() => {
     if (checkExpired()) {
-      history.push('/')
+      history.push('/signin')
     }
   })
 

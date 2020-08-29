@@ -18,10 +18,7 @@ const Search = (props) => {
 
   const doSearch = e => {
     e.preventDefault()
-    if (checkExpired()) {
-      history.push('/')
-    }
-    dispatch(search(searchText))
+    checkExpired() ? history.push('/signin') : dispatch(search(searchText))
   }
 
   const handleChange = e => {
