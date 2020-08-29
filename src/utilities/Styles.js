@@ -1,4 +1,3 @@
-import { relative } from "path";
 
 const { makeStyles } = require("@material-ui/core");
 

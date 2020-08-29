@@ -1,11 +1,11 @@
-import { FETCH_LOG_IN, FETCH_LOG_IN_SUCCESS, FETCH_LOG_IN_ERROR, START_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE, ADD_SONG_TO_PLAYLIST, REMOVE_SONG_FROM_PLAYLIST, GET_PLAYLISTS, GET_PLAYLISTS_SUCCESS, GET_PLAYLISTS_FAILURE, SAVE_PLAYLIST, SAVE_PLAYLIST_SUCCESS, SAVE_PLAYLIST_FAILURE, UPDATE_PLAYLIST_NAME, UPDATE_PLAYLIST_NAME_SUCCESS, DELETE_PLAYLIST, DELETE_PLAYLIST_SUCCESS, DELETE_PLAYLIST_FAILURE, UPDATE_PLAYLIST_NAME_FAILURE, START_SEARCH, SEARCH_SUCCESS, CHANGE_SELECTED_PLAYLIST, RESET_ERROR, ADD_SONG_TO_PLAYLIST_SUCCESS, ADD_SONG_TO_PLAYLIST_FAILURE, REMOVE_SONG_FROM_PLAYLIST_SUCCESS, REMOVE_SONG_FROM_PLAYLIST_FAILURE, SEARCH_FAILURE } from '../actions'
+import { FETCH_LOG_IN_SUCCESS, SIGNUP_SUCCESS, GET_PLAYLISTS_SUCCESS, SAVE_PLAYLIST_SUCCESS, UPDATE_PLAYLIST_NAME_SUCCESS, DELETE_PLAYLIST_SUCCESS, SEARCH_SUCCESS, CHANGE_SELECTED_PLAYLIST, RESET_ERROR, ADD_SONG_TO_PLAYLIST_SUCCESS, REMOVE_SONG_FROM_PLAYLIST_SUCCESS, START_FETCH, FETCH_FAILED } from '../actions'
 
 
 export const init = {
   user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
   searchResults: [],
   selectedPlaylist: {
-    playlist_name: 'New Playlist',
+    playlist_name: 'Loading',
     songs: [],
     id: -1
   },
@@ -14,59 +14,45 @@ export const init = {
   error: '',
   playlists: [{
     id: 1,
-    playlist_name: 'some_playlist_name',
+    playlist_name: 'Loading',
     user_id: 1
   }]
 }
-
-
-
 export const SongReducer = (state = init, action) => {
   switch (action.type) {
-    case FETCH_LOG_IN:
+    // display loading, reset error
+    case START_FETCH:
       return {
         ...state,
         isFetching: true,
         error: ''
       }
-    case FETCH_LOG_IN_SUCCESS:
-      return {
-        ...state,
-        token: action.payload,
-        isFetching: false,
-      }
-    case FETCH_LOG_IN_ERROR:
+    // display error
+    case FETCH_FAILED:
       return {
         ...state,
         error: action.payload,
         isFetching: false,
       }
-    case START_SIGNUP:
+    // token exists
+    case FETCH_LOG_IN_SUCCESS:
       return {
         ...state,
-        isFetching: true,
-        error: ''
+        token: action.payload,
+        isFetching: false,
+        searchResults: []
       }
+    // set token and user, reset search results
     case SIGNUP_SUCCESS: {
       return {
         ...state,
         token: action.payload.token,
         user: action.payload.createdUser,
         isFetching: false,
+        searchResults: []
       }
     }
-    case SIGNUP_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload,
-      }
-    case ADD_SONG_TO_PLAYLIST:
-      return {
-        ...state,
-        isFetching: true,
-        error: ''
-      }
+    // add retrieved playlist to array of playlists
     case ADD_SONG_TO_PLAYLIST_SUCCESS:
       {
         return {
@@ -76,18 +62,7 @@ export const SongReducer = (state = init, action) => {
           selectedPlaylist: action.payload
         }
       }
-    case ADD_SONG_TO_PLAYLIST_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload
-      }
-    case REMOVE_SONG_FROM_PLAYLIST:
-      return {
-        ...state,
-        isFetching: true,
-        error: ''
-      }
+    // modify playlist object to new one without removed song
     case REMOVE_SONG_FROM_PLAYLIST_SUCCESS:
       return {
         ...state,
@@ -95,18 +70,7 @@ export const SongReducer = (state = init, action) => {
         selectedPlaylist: action.payload,
         isFetching: false
       }
-    case REMOVE_SONG_FROM_PLAYLIST_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload
-      }
-    case GET_PLAYLISTS:
-      return {
-        ...state,
-        error: '',
-        isFetching: true
-      }
+    // set retrieved playlists to state.playlists
     case GET_PLAYLISTS_SUCCESS: {
       return {
         ...state,
@@ -114,18 +78,7 @@ export const SongReducer = (state = init, action) => {
         playlists: action.payload
       }
     }
-    case GET_PLAYLISTS_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload
-      }
-    case SAVE_PLAYLIST:
-      return {
-        ...state,
-        isFetching: true,
-        error: ''
-      }
+    // add newly created playlist to state.playlists and set it as the currently active playlist
     case SAVE_PLAYLIST_SUCCESS:
       return {
         ...state,
@@ -133,18 +86,7 @@ export const SongReducer = (state = init, action) => {
         playlists: [...state.playlists, action.payload],
         selectedPlaylist: action.payload
       }
-    case SAVE_PLAYLIST_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload
-      }
-    case UPDATE_PLAYLIST_NAME:
-      return {
-        ...state,
-        isFetching: true,
-        error: ''
-      }
+    // modify playlist array to rename current playlist object
     case UPDATE_PLAYLIST_NAME_SUCCESS: {
       return {
         ...state,
@@ -153,59 +95,31 @@ export const SongReducer = (state = init, action) => {
         selectedPlaylist: action.payload
       }
     }
-    case UPDATE_PLAYLIST_NAME_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload
-      }
-    case DELETE_PLAYLIST:
-      return {
-        ...state,
-        isFetching: true,
-        error: ''
-      }
+    // remove selected playlist, and switch to a new playlist
     case DELETE_PLAYLIST_SUCCESS: {
       return {
         ...state,
         isFetching: false,
         playlists: state.playlists.filter(list => list.id !== action.payload),
-        selectedPlaylist: state.playlists.filter(list => list.id !== action.payload)[0]
+        selectedPlaylist: state.playlists.filter(list => list.id !== action.payload)[0] || { playlist_name: 'No Playlists Found', songs: [], id: -1 }
       }
     }
-    case DELETE_PLAYLIST_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload
-      }
-    case START_SEARCH:
-      return {
-        ...state,
-        isFetching: true,
-        error: ''
-      }
+    // display retrieved search results
     case SEARCH_SUCCESS:
       return {
         ...state,
         isFetching: false,
         searchResults: action.payload
       }
-    case SEARCH_FAILURE: {
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload
-      }
-    }
+    // change currently selected playlist to specified one, and modify playlist array to ensure data is saved
     case CHANGE_SELECTED_PLAYLIST: {
-
       return {
         ...state,
         selectedPlaylist: state.playlists.filter(list => list.id === action.payload)[0],
         playlists: state.playlists.map(list => list.id === state.selectedPlaylist.id ? state.selectedPlaylist : list)
       }
     }
+    // reset error to an empty string to ensure error does not continue to display across pages
     case RESET_ERROR:
       return {
         ...state,

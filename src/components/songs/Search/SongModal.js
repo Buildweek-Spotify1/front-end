@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, Card, CardMedia, CardContent, Typography, Button, CardActions } from '@material-ui/core'
 import useStyles from '../../../utilities/Styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToPlaylist, getRecommendedSongs } from '../../../redux/actions'
+import { addToPlaylist, getRecommendedSongs, addNewPlaylist } from '../../../redux/actions'
 import { useHistory } from 'react-router'
 import { checkExpired } from '../../../utilities/checkExpired'
 
@@ -49,6 +49,9 @@ const SongModal = ({ song, ...props }) => {
               props.setOpen(false)
             }}>Add To Playlist</Button>
             <Button size='small' onClick={() => {
+              if (selectedPlaylist.id === -1) {
+                dispatch(addNewPlaylist())
+              }
               if (checkExpired()) {
                 history.push('/')
               }

@@ -31,7 +31,7 @@ const Home = () => {
         </section>
       </section>
       <section className="footer">
-        <img src={require("../../img/equalizer-1-1400x300.png")} />
+        <img src={require("../../img/equalizer-1-1400x300.png")} alt='music level visualizer' />
       </section>
       <div className="copyrite">copyrite 2020</div>
     </div>

@@ -3,7 +3,7 @@ import './App.css';
 import { Route, useLocation } from 'react-router-dom'
 
 //Redux Imports
-import { Provider, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 //component imports
 import UserPage from './components/songs/UserPage';
@@ -14,21 +14,29 @@ import SignIn from './components/signin/SignIn'
 import { resetError } from './redux/actions';
 import Home from './components/marketing/Home';
 import About from './components/marketing/About';
+import { default as Loading } from 'react-spinners/ScaleLoader'
+import { css } from '@emotion/core'
 
-console.log(process.env.CLIENT_ID)
 
+const override = css`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+`;
 
 function App() {
   const location = useLocation()
   const dispatch = useDispatch()
+  const isFetching = useSelector(state => state.isFetching)
 
   useEffect(() => {
     dispatch(resetError())
-  }, [location])
+  }, [location, dispatch])
 
   return (
 
     <div>
+      <Loading css={override} loading={isFetching} />
       <Route render={({ location }) =>
         location.pathname !== '/' && location.pathname !== '/about' ? (
           <Header />) : null
