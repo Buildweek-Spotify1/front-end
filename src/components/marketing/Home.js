@@ -34,6 +34,7 @@ const Home = () => {
         <img src={require("../../img/equalizer-1-1400x300.png")} alt='music level visualizer' />
       </section>
       <div className="copyrite">copyrite 2020</div>
+      <div>Site Icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
     </div>
   )
 }
