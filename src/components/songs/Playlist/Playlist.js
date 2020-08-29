@@ -29,7 +29,7 @@ const Playlist = (props) => {
       history.push('/')
     }
     dispatch(getPlaylists())
-  }, [])
+  }, [dispatch, history])
 
   const startEdit = () => {
     setEditingText(selectedPlaylist.playlist_name)
@@ -52,7 +52,7 @@ const Playlist = (props) => {
         }
         dispatch(changeSelectedPlaylist(parseInt(e.target.value)))
       }}>
-        {playlists.map(list => <MenuItem value={list.id}>{list.playlist_name}</MenuItem>)}
+        {playlists.map(list => <MenuItem key={list.playlist_name + list.id} value={list.id}>{list.playlist_name}</MenuItem>)}
       </Select>
       {editing ?
         <form onSubmit={changeName}>
