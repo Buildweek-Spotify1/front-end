@@ -42,19 +42,13 @@ const PlaylistModal = ({ song, ...props }) => {
           </CardContent>
           <CardActions>
             <Button size='small' onClick={() => {
-              if (checkExpired()) {
-                history.push('/')
-              }
-              dispatch(removeFromPlaylist(selectedPlaylist.id, song.id))
+              checkExpired() ? history.push('/signin') : dispatch(removeFromPlaylist(selectedPlaylist.id, song.id))
               props.setOpen(false)
             }
             }>Remove from Playlist</Button>
             <Button size='small' onClick={() => {
               props.setOpen(false)
-              if (checkExpired()) {
-                history.push('/')
-              }
-              dispatch(getRecommendedSongs(song))
+              checkExpired() ? history.push('/signin') : dispatch(getRecommendedSongs(song))
             }} >Suggest Songs</Button>
           </CardActions>
         </Card>

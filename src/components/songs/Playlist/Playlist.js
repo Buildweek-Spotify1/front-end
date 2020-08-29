@@ -25,10 +25,7 @@ const Playlist = (props) => {
   const history = useHistory()
 
   useEffect(() => {
-    if (checkExpired()) {
-      history.push('/')
-    }
-    dispatch(getPlaylists())
+    checkExpired() ? history.push('/signin') : dispatch(getPlaylists())
   }, [dispatch, history])
 
   const startEdit = () => {
@@ -38,19 +35,13 @@ const Playlist = (props) => {
 
   const changeName = e => {
     setEditing(false)
-    if (checkExpired()) {
-      history.push('/')
-    }
-    dispatch(changePlaylistName({ ...selectedPlaylist, playlist_name: editingText }))
+    checkExpired() ? history.push('/signin') : dispatch(changePlaylistName({ ...selectedPlaylist, playlist_name: editingText }))
   }
 
   return (
     <div style={{ position: 'relative', height: '100%' }}>
       <Select value={selectedPlaylist.id} onChange={e => {
-        if (checkExpired()) {
-          history.push('/')
-        }
-        dispatch(changeSelectedPlaylist(parseInt(e.target.value)))
+        checkExpired() ? history.push('/signin') : dispatch(changeSelectedPlaylist(parseInt(e.target.value)))
       }}>
         {playlists.map(list => <MenuItem key={list.playlist_name + list.id} value={list.id}>{list.playlist_name}</MenuItem>)}
       </Select>
@@ -67,10 +58,7 @@ const Playlist = (props) => {
       <Grid container justify='center' spacing={1} className={classes.playlistButtons}>
         <Grid item>
           <Fab variant='extended' onClick={() => {
-            if (checkExpired()) {
-              history.push('/')
-            }
-            dispatch(addNewPlaylist())
+            checkExpired() ? history.push('/signin') : dispatch(addNewPlaylist())
           }}>
             <AddIcon />
             New
@@ -78,10 +66,7 @@ const Playlist = (props) => {
         </Grid>
         <Grid item>
           <Fab variant='extended' onClick={() => {
-            if (checkExpired()) {
-              history.push('/')
-            }
-            dispatch(deletePlaylist(selectedPlaylist.id))
+            checkExpired() ? history.push('/signin') : dispatch(deletePlaylist(selectedPlaylist.id))
           }}>
             <DeleteIcon />
             Delete
