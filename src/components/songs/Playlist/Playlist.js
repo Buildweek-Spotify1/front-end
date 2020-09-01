@@ -14,25 +14,40 @@ import { checkExpired } from '../../../utilities/checkExpired'
 
 
 const Playlist = (props) => {
-  const selectedPlaylist = useSelector(state => state.selectedPlaylist)
-  const [selectedSong, setSelectedSong] = useState({ albumCover: '' })
-  const [modalOpen, setModalOpen] = useState(false)
+  //hooks
   const dispatch = useDispatch()
-  const playlists = useSelector(state => state.playlists)
-  const [editing, setEditing] = useState(false)
-  const [editingText, setEditingText] = useState('')
   const classes = useStyles()
   const history = useHistory()
 
+  //redux state
+  const selectedPlaylist = useSelector(state => state.selectedPlaylist)
+  const playlists = useSelector(state => state.playlists)
+
+  //component state
+  const [selectedSong, setSelectedSong] = useState({ albumCover: '' })
+  const [modalOpen, setModalOpen] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [editingText, setEditingText] = useState('')
+
+  /**
+   * redirect page if token is expired
+   */
   useEffect(() => {
     checkExpired() ? history.push('/signin') : dispatch(getPlaylists())
   }, [dispatch, history])
 
+  /**
+   * Click handler for text editor
+   */
   const startEdit = () => {
     setEditingText(selectedPlaylist.playlist_name)
     setEditing(true)
   }
 
+  /**
+   * submit handler for text editor
+   * @param {event} e click event
+   */
   const changeName = e => {
     setEditing(false)
     checkExpired() ? history.push('/signin') : dispatch(changePlaylistName({ ...selectedPlaylist, playlist_name: editingText }))
@@ -41,20 +56,53 @@ const Playlist = (props) => {
   return (
     <div style={{ position: 'relative', height: '100%' }}>
       <Select value={selectedPlaylist.id} onChange={e => {
-        checkExpired() ? history.push('/signin') : dispatch(changeSelectedPlaylist(parseInt(e.target.value)))
+        checkExpired() ?
+          history.push('/signin')
+          :
+          dispatch(changeSelectedPlaylist(parseInt(e.target.value)))
       }}>
-        {playlists.map(list => <MenuItem key={list.playlist_name + list.id} value={list.id}>{list.playlist_name}</MenuItem>)}
+        {playlists.map(list =>
+          <MenuItem
+            key={list.playlist_name + list.id}
+            value={list.id}
+          >
+            {list.playlist_name}
+          </MenuItem>
+        )}
       </Select>
       {editing ?
         <form onSubmit={changeName}>
-          <TextField size='small' InputProps={{ classes: { input: classes.editTextFontSize } }} className={classes.editText} value={editingText} name='editingText' onChange={e => setEditingText(e.target.value)} />
+          <TextField
+            size='small'
+            InputProps={
+              {
+                classes: {
+                  input: classes.editTextFontSize
+                }
+              }}
+            className={classes.editText}
+            value={editingText}
+            name='editingText'
+            onChange={e => setEditingText(e.target.value)}
+          />
         </form>
         :
         <Typography variant='h3' onClick={startEdit}>
           {selectedPlaylist.playlist_name}
         </Typography>}
-      {selectedPlaylist.songs.map(song => <PlaylistItem setSelectedSong={setSelectedSong} setModalOpen={setModalOpen} song={song} key={`${song.title} - ${song.artist}`} />)}
-      <PlaylistModal song={selectedSong} open={modalOpen} setOpen={setModalOpen} />
+      {selectedPlaylist.songs.map(song =>
+        <PlaylistItem
+          setSelectedSong={setSelectedSong}
+          setModalOpen={setModalOpen}
+          song={song}
+          key={`${song.title} - ${song.artist}`}
+        />
+      )}
+      <PlaylistModal
+        song={selectedSong}
+        open={modalOpen}
+        setOpen={setModalOpen}
+      />
       <Grid container justify='center' spacing={1} className={classes.playlistButtons}>
         <Grid item>
           <Fab variant='extended' onClick={() => {

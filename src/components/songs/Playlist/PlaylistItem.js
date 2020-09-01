@@ -3,18 +3,35 @@ import { Card, CardActionArea, Typography, Popover, useMediaQuery, useTheme } fr
 import useStyles from '../../../utilities/Styles'
 
 const PlaylistItem = ({ song, setSelectedSong, setModalOpen, ...rest }) => {
+  //hooks
   const classes = useStyles()
 
+  //component state
   const [popoverAnchor, setPopoverAnchor] = useState(null)
+
+  /**
+   * event handler for mouse enter event
+   * 
+   * @param {event} e mouse enter event
+   */
   const handlePopoverOpen = e => {
     setPopoverAnchor(e.currentTarget)
   }
+
+  /**
+   * event handler for mouse leave event
+   */
   const handlePopoverClose = () => {
     setPopoverAnchor(null)
   }
 
+  //explicit truthy conversion
   const open = Boolean(popoverAnchor)
+
+  //media query
   const matches = useMediaQuery(useTheme().breakpoints.down('md'))
+
+
   return (
     <div style={{ width: '100%', textAlign: 'left' }}>
       <Card variant='outlined'>

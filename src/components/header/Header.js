@@ -3,10 +3,16 @@ import { AppBar, Container, Toolbar, Typography, Button } from '@material-ui/cor
 import { useHistory, useLocation } from 'react-router'
 
 const Header = (props) => {
+  //hooks
   const history = useHistory()
   const location = useLocation()
+
+  //component state
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token') !== null)
 
+  /**
+   * changes buttons on header based on if token exists
+   */
   useEffect(() => {
     setLoggedIn(localStorage.getItem('token') !== null)
   }, [location])

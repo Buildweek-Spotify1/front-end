@@ -1,6 +1,12 @@
 import { useState } from "react"
 import * as yup from 'yup'
 
+/**
+ * hook to create all the required state management for a non validated form
+ * 
+ * @param {object} init initial state for form
+ * @param {function} cb callback to execute on form submission
+ */
 export const useForm = (init, cb) => {
   const [state, setState] = useState({ ...init })
 
@@ -20,6 +26,12 @@ export const useForm = (init, cb) => {
   return [state, handleChange, handleSubmit]
 }
 
+/**
+ * 
+ * @param {object} init initial state for form
+ * @param {object} formSchema definition for form shape
+ * @param {function} cb callback to execute on form submission
+ */
 export const useFormValidation = (init, formSchema, cb) => {
   const [state, setState] = useState({ ...init })
   const [errors, setErrors] = useState({ ...init })

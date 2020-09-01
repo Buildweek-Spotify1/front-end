@@ -10,22 +10,26 @@ import { useHistory, Redirect } from "react-router";
 
 
 export default function SignIn() {
+  //hooks
   const dispatch = useDispatch()
   const history = useHistory()
   const classes = useStyles();
+
+  //redux state
   const error = useSelector(state => state.error)
 
-
+  //initial state for form
   const init = {
     username: '',
     password: ''
   }
 
-
+  //componenet state
   const [formState, inputChange, formSubmit] = useForm(init, () => {
     dispatch(logIn(formState, () => history.push('/user')))
   });
 
+  //redirect if token exists
   if (localStorage.getItem('token')) {
     return <Redirect to='/user' />
   }
