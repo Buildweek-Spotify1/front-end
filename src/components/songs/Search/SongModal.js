@@ -9,10 +9,15 @@ import { checkExpired } from '../../../utilities/checkExpired'
 
 
 const SongModal = ({ song, ...props }) => {
+  //hooks
   const classes = useStyles()
   const history = useHistory()
   const dispatch = useDispatch()
   const selectedPlaylist = useSelector(state => state.selectedPlaylist)
+
+  /**
+   * close event handler for Modal
+   */
   const handleClose = () => {
     props.setOpen(false)
   }

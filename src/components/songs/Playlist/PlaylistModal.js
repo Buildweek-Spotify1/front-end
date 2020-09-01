@@ -9,13 +9,21 @@ import { useHistory } from 'react-router'
 
 
 const PlaylistModal = ({ song, ...props }) => {
+  //hooks
   const classes = useStyles()
   const dispatch = useDispatch()
-  const selectedPlaylist = useSelector(state => state.selectedPlaylist)
   const history = useHistory()
+
+  //redux state
+  const selectedPlaylist = useSelector(state => state.selectedPlaylist)
+
+  /**
+   * close handler for modal
+   */
   const handleClose = () => {
     props.setOpen(false)
   }
+
   return (
     <Modal
       open={props.open}

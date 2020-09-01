@@ -11,14 +11,13 @@ import { useHistory, Redirect } from "react-router";
 import { useFormValidation } from "../../hooks/useForm";
 
 export default function SignUp() {
+    //hooks
     const dispatch = useDispatch()
     const classes = useStyles();
     const history = useHistory()
-    const submitError = useSelector(state => state.error)
 
-    // const [serverError, setServerError] = useState("");
-    // const [buttonDisabled, setButtonDisabled] = useState(true);
 
+    //initial state for form
     const init = {
         firstName: '',
         lastName: '',
@@ -26,6 +25,7 @@ export default function SignUp() {
         password: ''
     }
 
+    //shape of form requried
     const formSchema = yup.object().shape({
         firstName: yup.string().min(2, "Minimum 2 characters").required("First name is required"),
 
@@ -36,10 +36,21 @@ export default function SignUp() {
         password: yup.string().min(6, "Must be at least 6 characters").required("Password is required"),
     });
 
+    //component state
     const [formState, errors, inputChange, formSubmit] = useFormValidation(init, formSchema, () => {
         dispatch(signUp(formState, () => history.push('/user')))
     })
 
+    //redux state
+    const submitError = useSelector(state => state.error)
+
+
+
+
+
+
+
+    // blocked out axios call for React 1 MVP
     // const axiosCall = (e) => {
     // e.preventDefault();
     // console.log("form submitted!");
@@ -61,22 +72,17 @@ export default function SignUp() {
     //         });
     // };
 
-
-
+    //redirect if token exists
     if (localStorage.getItem('token')) {
         return <Redirect to='/user' />
     }
 
-
     return (
-
-
-
         <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
                     Sign in
-        </Typography>
+                </Typography>
                 <form className={classes.form} noValidate autoComplete="off" onSubmit={formSubmit} name="form">
 
                     <TextField

@@ -8,10 +8,15 @@ import { useHistory } from 'react-router'
 import { checkExpired } from '../../utilities/checkExpired'
 
 const UserPage = props => {
+
+  //hooks
   const classes = useStyles()
   const error = useSelector(state => state.error)
   const history = useHistory()
 
+  /**
+   * redirects if token is expired
+   */
   useEffect(() => {
     if (checkExpired()) {
       history.push('/signin')

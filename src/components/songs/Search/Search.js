@@ -9,25 +9,44 @@ import { useHistory } from 'react-router'
 
 
 const Search = (props) => {
+  //hooks
   const classes = useStyles()
-  const songs = useSelector(state => state.searchResults)
-  const [searchText, setSearchText] = useState('')
   const matches = useMediaQuery(useTheme().breakpoints.down('md'))
   const dispatch = useDispatch()
   const history = useHistory()
 
+  //redux state
+  const songs = useSelector(state => state.searchResults)
+
+  //component state
+  const [searchText, setSearchText] = useState('')
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedSong, setSelectedSong] = useState({ title: '' })
+
+  /**
+   * submit handler for search box
+   * 
+   * @param {event} e click event
+   */
   const doSearch = e => {
     e.preventDefault()
     checkExpired() ? history.push('/signin') : dispatch(search(searchText))
   }
 
+  /**
+   * change event handler for search
+   * 
+   * @param {event} e change event
+   */
   const handleChange = e => {
     setSearchText(e.target.value)
   }
 
-  const [modalOpen, setModalOpen] = useState(false)
-  const [selectedSong, setSelectedSong] = useState({ title: '' })
-
+  /**
+   * sets the selected song to the one that was clicked on, and opens the song modal
+   * 
+   * @param {object} song song object that was clicked on
+   */
   const addSongToPlaylist = (song) => {
     // dispatch(addToPlaylist(song))
     setSelectedSong(song)
