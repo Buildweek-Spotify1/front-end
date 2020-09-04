@@ -14,7 +14,7 @@ import Header from './components/header/Header'
 import SignIn from './components/signin/SignIn'
 import Home from './components/marketing/Home';
 import About from './components/marketing/About';
-import { default as Loading } from 'react-spinners/ScaleLoader'
+import { default as Loading } from 'react-spinners/PacmanLoader'
 
 //styling
 import { css } from '@emotion/core'
