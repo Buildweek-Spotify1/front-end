@@ -2,6 +2,6 @@
 
 # Design
   ##### Deployed Link
-  [Live](https://spotify1-buildweek.vercel.app/) 
+  [Live](https://elated-wing-bdbe68.netlify.app) 
   ##### Styling Library
   Material
